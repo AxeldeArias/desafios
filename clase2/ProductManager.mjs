@@ -1,21 +1,42 @@
+import { Product } from "./Product.mjs";
+
 export class ProductManager {
-    products=[]
-    nombre;
+  products = [];
+  nombre;
+  static autoId = 0;
 
-    constructor({nombre}){
-        if(!nombre) throw new Error("nombre is required")
-        this.nombre = nombre
+  constructor({ nombre }) {
+    if (!nombre) throw new Error("nombre is required");
+    this.nombre = nombre;
+  }
+
+  addProduct({ title, description, price, thumbnail, code, stock } = {}) {
+    if (this.products.find((currentProduct) => currentProduct.code === code)) {
+      throw new Error("El producto ya fue ingresado");
     }
 
-    addProduct(newProduct){
-        if(!this.products.find(currentProduct=> currentProduct.title === newProduct.title)){
-            this.products = [...this.products, newProduct]
-        }
-    }
+    const newProduct = new Product({
+      id: ProductManager.autoId++,
+      title,
+      description,
+      price,
+      thumbnail,
+      code,
+      stock,
+    });
 
-    getProductById(id){
-      return this.products.find(currentProduct=> currentProduct.id === id)
-    }
+    this.products = [...this.products, newProduct];
+  }
 
+  getProducts() {
+    return this.products;
+  }
+
+  getProductById(id) {
+    const productById = this.products.find(
+      (currentProduct) => currentProduct.id === id
+    );
+    if (!productById) throw new Error(`No existe un producto con el id ${id}`);
+    return productById;
+  }
 }
-
