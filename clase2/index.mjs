@@ -61,4 +61,4 @@ console.log("// descomentar \n");
 console.log("\n############ Error id no encontrado  ############\n");
 
 console.log("// descomentar \n");
-console.log(newProductManager.getProductById(2));
+// console.log(newProductManager.getProductById(2));
