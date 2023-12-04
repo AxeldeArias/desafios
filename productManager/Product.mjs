@@ -8,13 +8,13 @@ export class Product {
   stock;
 
   constructor({ id, title, description, price, thumbnail, code, stock } = {}) {
-    if (id === undefined) throw new Error("id is required");
-    if (!title) throw new Error("title is required");
-    if (!description) throw new Error("description is required");
-    if (price === undefined) throw new Error("price is required");
-    if (!thumbnail) throw new Error("thumbnail is required");
-    if (!code) throw new Error("code is required");
-    if (!stock) throw new Error("stock is required");
+    if (id === undefined) throw new Error("id es requerido");
+    if (!title) throw new Error("title es requerido");
+    if (!description) throw new Error("description es requerido");
+    if (price === undefined) throw new Error("price es requerido");
+    if (!thumbnail) throw new Error("thumbnail es requerido");
+    if (!code) throw new Error("code es requerido");
+    if (!stock) throw new Error("stock es requerido");
 
     this.id = id;
     this.title = title;

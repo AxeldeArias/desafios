@@ -21,6 +21,46 @@ test("when a new Product Manager is created they should have an empty product li
   expect(productList).toEqual([]);
 });
 
+test("when a product without a mandatory properties is added, the product list should not have this one ", async () => {
+  const newProductManager = new ProductManager({
+    nombre: "Axel",
+    path: FILE_PATH,
+  });
+
+  const { description, ...productWithoutDescription } = sojaProduct;
+  expect(
+    newProductManager.addProduct(productWithoutDescription)
+  ).rejects.toThrow("description es requerido");
+
+  const { title, ...productWithoutTitle } = sojaProduct;
+  expect(newProductManager.addProduct(productWithoutTitle)).rejects.toThrow(
+    "title es requerido"
+  );
+
+  const { price, ...productWithoutPrice } = sojaProduct;
+  expect(newProductManager.addProduct(productWithoutPrice)).rejects.toThrow(
+    "price es requerido"
+  );
+
+  const { thumbnail, ...productWithoutThumbnail } = sojaProduct;
+  expect(newProductManager.addProduct(productWithoutThumbnail)).rejects.toThrow(
+    "thumbnail es requerido"
+  );
+
+  const { code, ...productWithoutCode } = sojaProduct;
+  expect(newProductManager.addProduct(productWithoutCode)).rejects.toThrow(
+    "code es requerido"
+  );
+
+  const { stock, ...productWithoutStock } = sojaProduct;
+  expect(newProductManager.addProduct(productWithoutStock)).rejects.toThrow(
+    "stock es requerido"
+  );
+
+  const productList = await newProductManager.getProducts();
+  expect(productList).toEqual([]);
+});
+
 test("when some products are added, the product list should contains them", async () => {
   const newProductManager = new ProductManager({
     nombre: "Axel",

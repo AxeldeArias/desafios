@@ -7,8 +7,8 @@ export class ProductManager {
   path;
 
   constructor({ nombre, path }) {
-    if (!nombre) throw new Error("nombre is required");
-    if (!path) throw new Error("path is required");
+    if (!nombre) throw new Error("nombre es requerido");
+    if (!path) throw new Error("path es requerido");
     this.nombre = nombre;
     this.path = path;
   }
