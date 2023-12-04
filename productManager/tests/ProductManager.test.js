@@ -53,7 +53,7 @@ test("when an existing product there should be an error", async () => {
   expect(products.length).toBe(1);
 });
 
-test("id a product is updated, the product list should have the changes", async () => {
+test("if a product is updated, the product list should have the changes", async () => {
   const newDescription = "soja refinada";
 
   const newProductManager = new ProductManager({
@@ -77,7 +77,7 @@ test("id a product is updated, the product list should have the changes", async 
   });
 });
 
-test("id a product is deleted, the product list should have this one anymore", async () => {
+test("if a product is deleted, the product list should have this one anymore", async () => {
   const newProductManager = new ProductManager({
     nombre: "Axel",
     path: FILE_PATH,
