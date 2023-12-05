@@ -62,8 +62,8 @@ export class ProductManager {
   async updateProduct(id, newProduct) {
     const products = await this.getProducts();
 
-    if (newProduct.id && getProductById(newProduct.id)) {
-      throw new Error("Ya existe otro producto con ese id ");
+    if (newProduct.id && this.getProductById(newProduct.id)) {
+      throw new Error("Ya existe otro producto con ese id");
     }
 
     const updatedProducts = products.map((currentProduct) =>
@@ -75,12 +75,14 @@ export class ProductManager {
     this.#saveProducts(updatedProducts);
   }
 
-  async deleteProduct(id, newProduct) {
+  async deleteProduct(id) {
     const products = await this.getProducts();
-
     const indexToDelete = products.findIndex(
       (currentProduct) => currentProduct.id === id
     );
+    if (indexToDelete === -1) {
+      throw new Error("El producto no existe");
+    }
     products.splice(indexToDelete, 1);
 
     this.#saveProducts(products);

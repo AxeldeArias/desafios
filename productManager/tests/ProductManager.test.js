@@ -68,7 +68,7 @@ test("delete product", async () => {
   });
 
   await newProductManager.addProduct(sojaProduct);
-  await newProductManager.deleteProduct(sojaProduct);
+  await newProductManager.deleteProduct(0);
 
   const products = await newProductManager.getProducts();
 
@@ -79,7 +79,37 @@ test("delete product", async () => {
   expect(products.length).toBe(0);
 });
 
-test("throw product already exists error", async () => {
+test("delete product - throw product not exist error", async () => {
+  const newProductManager = new ProductManager({
+    nombre: "Axel",
+    path: FILE_PATH,
+  });
+
+  expect(newProductManager.deleteProduct(0)).rejects.toThrow(
+    "El producto no existe"
+  );
+});
+
+test("update product - throw product already exists error", async () => {
+  const newDescription = "soja refinada";
+  const sojaProductId = 0;
+  const atunProductId = 1;
+
+  const newProductManager = new ProductManager({
+    nombre: "Axel",
+    path: FILE_PATH,
+  });
+  await newProductManager.addProduct(sojaProduct);
+  await newProductManager.addProduct(atunProduct);
+
+  expect(
+    newProductManager.updateProduct(sojaProductId, {
+      id: atunProductId,
+    })
+  ).rejects.toThrow("Ya existe otro producto con ese id");
+});
+
+test("add product - throw product already exists error", async () => {
   const newProductManager = new ProductManager({
     nombre: "Axel",
     path: FILE_PATH,
@@ -95,7 +125,7 @@ test("throw product already exists error", async () => {
   expect(products.length).toBe(1);
 });
 
-test("throw required attribute errors", async () => {
+test("add product - throw required attribute errors", async () => {
   const newProductManager = new ProductManager({
     nombre: "Axel",
     path: FILE_PATH,
