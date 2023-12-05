@@ -4,7 +4,7 @@ import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
 import { atunProduct, sojaProduct, sojaProductDuplicated } from "./constants";
 
-const FILE_PATH = "./files/productManager-test.json";
+const FILE_PATH = "./productManager-test.json";
 beforeEach(async () => {
   fs.unlink(FILE_PATH)
     .then(() => {})
