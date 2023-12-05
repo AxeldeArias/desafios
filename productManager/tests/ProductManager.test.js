@@ -91,7 +91,6 @@ test("delete product - throw product not exist error", async () => {
 });
 
 test("update product - throw product already exists error", async () => {
-  const newDescription = "soja refinada";
   const sojaProductId = 0;
   const atunProductId = 1;
 
