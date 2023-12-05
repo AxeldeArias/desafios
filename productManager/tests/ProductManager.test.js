@@ -6,9 +6,9 @@ import { atunProduct, sojaProduct, sojaProductDuplicated } from "./constants";
 
 const FILE_PATH = "./productManager-test.json";
 beforeEach(async () => {
-  fs.unlink(FILE_PATH)
-    .then(() => {})
-    .catch(() => {});
+  try {
+    await fs.unlink(FILE_PATH);
+  } catch (error) {}
 });
 
 test("init with empty product list", async () => {

@@ -62,7 +62,7 @@ export class ProductManager {
   async updateProduct(id, newProduct) {
     const products = await this.getProducts();
 
-    if (newProduct.id && this.getProductById(newProduct.id)) {
+    if (newProduct.id && (await this.getProductById(newProduct.id))) {
       throw new Error("Ya existe otro producto con ese id");
     }
 
@@ -72,7 +72,7 @@ export class ProductManager {
         : new Product({ ...currentProduct, ...newProduct })
     );
 
-    this.#saveProducts(updatedProducts);
+    await this.#saveProducts(updatedProducts);
   }
 
   async deleteProduct(id) {
@@ -85,7 +85,7 @@ export class ProductManager {
     }
     products.splice(indexToDelete, 1);
 
-    this.#saveProducts(products);
+    await this.#saveProducts(products);
   }
 
   async #saveProducts(products) {
