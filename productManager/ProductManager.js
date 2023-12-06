@@ -1,9 +1,8 @@
-import { Product } from "./Product.mjs";
+import { Product } from "./Product.js";
 import * as fs from "node:fs/promises";
 
 export class ProductManager {
   nombre;
-  #autoId = 0;
   path;
 
   constructor({ nombre, path }) {
@@ -19,9 +18,9 @@ export class ProductManager {
     if (products.find((currentProduct) => currentProduct.code === code)) {
       throw new Error("El producto ya fue ingresado");
     }
-
+    const newId = await this.#getNewId();
     const newProduct = new Product({
-      id: this.#autoId++,
+      id: newId,
       title,
       description,
       price,
@@ -62,8 +61,8 @@ export class ProductManager {
   async updateProduct(id, newProduct) {
     const products = await this.getProducts();
 
-    if (newProduct.id && (await this.getProductById(newProduct.id))) {
-      throw new Error("Ya existe otro producto con ese id");
+    if (newProduct.id) {
+      throw new Error("No se puede cambiar el id");
     }
 
     const updatedProducts = products.map((currentProduct) =>
@@ -86,6 +85,24 @@ export class ProductManager {
     products.splice(indexToDelete, 1);
 
     await this.#saveProducts(products);
+  }
+
+  async #getNewId() {
+    let lastId;
+    try {
+      const lastIdString = await fs.readFile("./lastId.txt", {
+        encoding: "utf-8",
+      });
+      lastId = Number(lastIdString);
+      if (Number.isNaN(lastId)) throw new Error("error al generar un nuevo id");
+    } catch (error) {
+      lastId = 0;
+    } finally {
+      await fs.writeFile("./lastId.txt", `${lastId + 1}`, {
+        encoding: "utf-8",
+      });
+    }
+    return lastId;
   }
 
   async #saveProducts(products) {
