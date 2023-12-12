@@ -16,8 +16,7 @@ const productManager = new ProductManager({
 
 app.get("/products", async (req, res) => {
   const { limit } = req.query;
-
-  if (limit && (Number.isNaN(limit) || limit <= 0)) {
+  if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
     return res.status(400).send({
       status: "bad request",
       description: "limit inválido",
