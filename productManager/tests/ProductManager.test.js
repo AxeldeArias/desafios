@@ -1,15 +1,23 @@
 import { expect, test } from "vitest";
-import { ProductManager } from "../ProductManager.js";
 import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
 import { atunProduct, sojaProduct, sojaProductDuplicated } from "./constants";
+import { LAST_ID_PATH, ProductManager } from "../src/ProductManager";
 
-const PRODUCTS_FILE_PATH = "./productManager-test.json";
-const LAST_ID_FILE_PATH = "./lastId.txt";
+const path = require("path");
+
+const PRODUCTS_FILE_PATH = path.join(
+  __dirname,
+  "../src/files/productManager-test.json"
+);
+
 beforeEach(async () => {
   try {
     await fs.unlink(PRODUCTS_FILE_PATH);
-    await fs.unlink(LAST_ID_FILE_PATH);
+  } catch (error) {}
+
+  try {
+    await fs.unlink(LAST_ID_PATH);
   } catch (error) {}
 });
 
@@ -23,7 +31,7 @@ test("init with empty product list", async () => {
   expect(productList).toEqual([]);
 });
 
-test.only("add new products", async () => {
+test("add new products", async () => {
   const newProductManager = new ProductManager({
     nombre: "Axel",
     path: PRODUCTS_FILE_PATH,
@@ -37,6 +45,19 @@ test.only("add new products", async () => {
   expect(productList[0]).toEqual({ ...sojaProduct, id: 0 });
   expect(productList[1]).toEqual({ ...atunProduct, id: 1 });
   expect(productList.length).toBe(2);
+});
+
+test("get product by id", async () => {
+  const newProductManager = new ProductManager({
+    nombre: "Axel",
+    path: PRODUCTS_FILE_PATH,
+  });
+
+  await newProductManager.addProduct(sojaProduct);
+
+  const product = await newProductManager.getProductById(0);
+
+  expect(product).toEqual({ ...sojaProduct, id: 0 });
 });
 
 test("update product", async () => {

@@ -1,5 +1,12 @@
 import { Product } from "./Product.js";
 import * as fs from "node:fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const LAST_ID_PATH = path.join(__dirname, "/files/lastId.txt");
 
 export class ProductManager {
   nombre;
@@ -54,7 +61,11 @@ export class ProductManager {
       (currentProduct) => currentProduct.id === id
     );
 
-    if (!productById) throw new Error(`No existe un producto con el id ${id}`);
+    if (!productById)
+      throw {
+        code: "no-exist-product",
+        description: `No existe un producto con el id ${id}`,
+      };
     return new Product(productById);
   }
 
@@ -90,7 +101,7 @@ export class ProductManager {
   async #getNewId() {
     let lastId;
     try {
-      const lastIdString = await fs.readFile("./lastId.txt", {
+      const lastIdString = await fs.readFile(LAST_ID_PATH, {
         encoding: "utf-8",
       });
       lastId = Number(lastIdString);
@@ -98,7 +109,7 @@ export class ProductManager {
     } catch (error) {
       lastId = 0;
     } finally {
-      await fs.writeFile("./lastId.txt", `${lastId + 1}`, {
+      await fs.writeFile(LAST_ID_PATH, `${lastId + 1}`, {
         encoding: "utf-8",
       });
     }
