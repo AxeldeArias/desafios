@@ -20,7 +20,7 @@ app.get("/products", async (req, res) => {
   if (limit && (Number.isNaN(limit) || limit <= 0)) {
     return res.status(400).send({
       status: "bad request",
-      description: "limit invalido",
+      description: "limit inválido",
     });
   }
 
