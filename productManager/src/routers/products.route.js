@@ -1,20 +1,15 @@
-import express from "express";
-import { ProductManager } from "./ProductManager.js";
+import { Router } from "express";
+import { PRODUCTS_FILE_PATH } from "../filenameUtils.js";
+import { ProductManager } from "../models/ProductManager.js";
 
-const PORT = 3000;
-const PRODUCTS_FILE_PATH = "./src/files/productManager-dev-server.json";
-
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const productRouter = Router();
 
 const productManager = new ProductManager({
   nombre: "server",
   path: PRODUCTS_FILE_PATH,
 });
 
-app.get("/products", async (req, res) => {
+productRouter.get("/", async (req, res) => {
   const { limit } = req.query;
   if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
     return res.status(400).send({
@@ -32,7 +27,7 @@ app.get("/products", async (req, res) => {
   });
 });
 
-app.get("/products/:uid", async (req, res) => {
+productRouter.get("/:uid", async (req, res) => {
   const { uid } = req.params;
   try {
     const product = await productManager.getProductById(Number(uid));
@@ -53,7 +48,7 @@ app.get("/products/:uid", async (req, res) => {
   }
 });
 
-app.post("/products", async (req, res) => {
+productRouter.post("/", async (req, res) => {
   const { code, description, price, stock, thumbnail, title } = req.body;
   if (
     !req.body ||
@@ -86,6 +81,4 @@ app.post("/products", async (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
+export default productRouter;

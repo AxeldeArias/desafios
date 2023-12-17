@@ -2,11 +2,11 @@
   "name": "clase2",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server.js",
+  "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "test": "vitest",
-    "dev": "node --watch ./src/server.js"
+    "test": "vitest --threads=false",
+    "dev": "node --watch ./src/app.js"
   },
   "keywords": [],
   "author": "",

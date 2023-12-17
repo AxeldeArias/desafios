@@ -1,12 +1,6 @@
 import { Product } from "./Product.js";
 import * as fs from "node:fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export const LAST_ID_PATH = path.join(__dirname, "/files/lastId.txt");
+import { LAST_ID_PATH, __dirname } from "../filenameUtils.js";
 
 export class ProductManager {
   nombre;
@@ -56,16 +50,16 @@ export class ProductManager {
 
   async getProductById(id) {
     const products = await this.getProducts();
-
     const productById = products.find(
       (currentProduct) => currentProduct.id === id
     );
 
-    if (!productById)
+    if (!productById) {
       throw {
         code: "no-exist-product",
         description: `No existe un producto con el id ${id}`,
       };
+    }
     return new Product(productById);
   }
 
@@ -107,7 +101,7 @@ export class ProductManager {
       lastId = Number(lastIdString);
       if (Number.isNaN(lastId)) throw new Error("error al generar un nuevo id");
     } catch (error) {
-      lastId = 0;
+      lastId = 1;
     } finally {
       await fs.writeFile(LAST_ID_PATH, `${lastId + 1}`, {
         encoding: "utf-8",

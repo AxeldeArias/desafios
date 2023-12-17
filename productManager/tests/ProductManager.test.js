@@ -2,14 +2,8 @@ import { expect, test } from "vitest";
 import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
 import { atunProduct, sojaProduct, sojaProductDuplicated } from "./constants";
-import { LAST_ID_PATH, ProductManager } from "../src/ProductManager";
-
-const path = require("path");
-
-const PRODUCTS_FILE_PATH = path.join(
-  __dirname,
-  "../src/files/productManager-test.json"
-);
+import { ProductManager } from "../src/models/ProductManager.js";
+import { LAST_ID_PATH, PRODUCTS_FILE_PATH } from "../src/filenameUtils.js";
 
 beforeEach(async () => {
   try {
@@ -42,8 +36,8 @@ test("add new products", async () => {
 
   const productList = await newProductManager.getProducts();
 
-  expect(productList[0]).toEqual({ ...sojaProduct, id: 0 });
-  expect(productList[1]).toEqual({ ...atunProduct, id: 1 });
+  expect(productList[0]).toEqual({ ...sojaProduct, id: 1 });
+  expect(productList[1]).toEqual({ ...atunProduct, id: 2 });
   expect(productList.length).toBe(2);
 });
 
@@ -55,9 +49,9 @@ test("get product by id", async () => {
 
   await newProductManager.addProduct(sojaProduct);
 
-  const product = await newProductManager.getProductById(0);
+  const product = await newProductManager.getProductById(1);
 
-  expect(product).toEqual({ ...sojaProduct, id: 0 });
+  expect(product).toEqual({ ...sojaProduct, id: 1 });
 });
 
 test("update product", async () => {
@@ -69,18 +63,16 @@ test("update product", async () => {
   });
 
   const newProduct = await newProductManager.addProduct(sojaProduct);
-  expect(newProduct).toEqual({ ...sojaProduct, id: 0 });
-
+  expect(newProduct).toEqual({ ...sojaProduct, id: 1 });
   await newProductManager.updateProduct(newProduct.id, {
     description: newDescription,
   });
 
   const products = await newProductManager.getProducts();
-
   expect(products[0]).toEqual({
     ...sojaProduct,
     description: newDescription,
-    id: 0,
+    id: 1,
   });
 });
 
@@ -91,13 +83,13 @@ test("delete product", async () => {
   });
 
   await newProductManager.addProduct(sojaProduct);
-  await newProductManager.deleteProduct(0);
+  await newProductManager.deleteProduct(1);
 
   const products = await newProductManager.getProducts();
 
   expect(products).not.toContainEqual({
     ...sojaProduct,
-    id: 0,
+    id: 1,
   });
   expect(products.length).toBe(0);
 });
@@ -108,14 +100,14 @@ test("delete product - throw product not exist error", async () => {
     path: PRODUCTS_FILE_PATH,
   });
 
-  expect(newProductManager.deleteProduct(0)).rejects.toThrow(
+  expect(newProductManager.deleteProduct(1)).rejects.toThrow(
     "El producto no existe"
   );
 });
 
 test("update product - throw you can not change the product id", async () => {
-  const sojaProductId = 0;
-  const atunProductId = 1;
+  const sojaProductId = 1;
+  const atunProductId = 2;
 
   const newProductManager = new ProductManager({
     nombre: "Axel",
@@ -143,7 +135,7 @@ test("add product - throw product already exists error", async () => {
   );
   const products = await newProductManager.getProducts();
 
-  expect(products[0]).toEqual({ ...sojaProduct, id: 0 });
+  expect(products[0]).toEqual({ ...sojaProduct, id: 1 });
   expect(products.length).toBe(1);
 });
 
