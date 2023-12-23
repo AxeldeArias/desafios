@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { PRODUCTS_FILE_PATH } from "../filenameUtils.js";
-import { ProductManager } from "../models/ProductManager.js";
+import { ProductsManager } from "../managers/ProductsManager.js";
 
 const productRouter = Router();
 
-const productManager = new ProductManager({
+const productManager = new ProductsManager({
   nombre: "server",
   path: PRODUCTS_FILE_PATH,
 });
@@ -27,13 +27,20 @@ productRouter.get("/", async (req, res) => {
   });
 });
 
-productRouter.get("/:uid", async (req, res) => {
-  const { uid } = req.params;
+productRouter.get("/:pid", async (req, res) => {
+  const pid = Number(req.params.pid);
+
+  if (Number.isNaN(pid)) {
+    return res.status(400).send({
+      status: "error",
+      error: "pid no es numérico",
+    });
+  }
+
   try {
-    const product = await productManager.getProductById(Number(uid));
+    const product = await productManager.getProductById(pid);
     res.status(200).send({ product });
   } catch (e) {
-    console.log(e);
     if (e?.code === "no-exist-product") {
       res.status(404).send({
         status: "success",
@@ -42,7 +49,7 @@ productRouter.get("/:uid", async (req, res) => {
     } else {
       res.status(500).send({
         status: "success",
-        products: e,
+        products: e?.message ?? "",
       });
     }
   }
@@ -52,12 +59,12 @@ productRouter.post("/", async (req, res) => {
   const { code, description, price, stock, thumbnail, title } = req.body;
   if (
     !req.body ||
-    code ||
-    description ||
-    price ||
-    stock ||
-    thumbnail ||
-    title
+    !code ||
+    !description ||
+    !price ||
+    !stock ||
+    !thumbnail ||
+    !title
   ) {
     return res.status(400).send({
       status: "error",
@@ -66,19 +73,84 @@ productRouter.post("/", async (req, res) => {
     });
   }
 
-  const newProduct = await productManager.addProduct({
-    code,
-    description,
-    price,
-    stock,
-    thumbnail,
-    title,
-  });
+  if (typeof thumbnail !== "object" || thumbnail.length <= 0) {
+    return res.status(400).send({
+      status: "error",
+      error: "thumbnail debe ser un array de strings ",
+    });
+  }
 
-  res.status(200).send({
-    status: "success",
-    product: newProduct,
-  });
+  try {
+    const newProduct = await productManager.addProduct({
+      code,
+      description,
+      price,
+      stock,
+      thumbnail,
+      title,
+    });
+
+    res.status(200).send({
+      status: "success",
+      product: newProduct,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: "error",
+      error: error?.message ?? "",
+    });
+  }
 });
 
+productRouter.put("/:pid", async (req, res) => {
+  const pid = Number(req.params.pid);
+
+  if (Number.isNaN(pid)) {
+    return res.status(400).send({
+      status: "error",
+      error: "pid no es numérico",
+    });
+  }
+
+  try {
+    const newProduct = await productManager.updateProduct(pid, {
+      ...req.body,
+    });
+    return res.status(200).send({
+      status: "success",
+      product: newProduct,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: "error",
+      error: error?.message ?? "",
+    });
+  }
+});
+
+productRouter.delete("/:pid", async (req, res) => {
+  const pid = Number(req.params.pid);
+
+  if (Number.isNaN(pid)) {
+    return res.status(400).send({
+      status: "error",
+      error: "pid no es numérico",
+    });
+  }
+
+  try {
+    const newProduct = await productManager.deleteProduct(pid, {
+      ...req.body,
+    });
+    return res.status(200).send({
+      status: "success",
+      product: newProduct,
+    });
+  } catch (error) {
+    return res.status(400).send({
+      status: "error",
+      error: error?.message ?? "",
+    });
+  }
+});
 export default productRouter;

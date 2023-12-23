@@ -1,8 +1,8 @@
-import { Product } from "./Product.js";
+import { ProductManager } from "./ProductManager.js";
 import * as fs from "node:fs/promises";
 import { LAST_ID_PATH, __dirname } from "../filenameUtils.js";
 
-export class ProductManager {
+export class ProductsManager {
   nombre;
   path;
 
@@ -20,7 +20,7 @@ export class ProductManager {
       throw new Error("El producto ya fue ingresado");
     }
     const newId = await this.#getNewId();
-    const newProduct = new Product({
+    const newProduct = new ProductManager({
       id: newId,
       title,
       description,
@@ -60,23 +60,30 @@ export class ProductManager {
         description: `No existe un producto con el id ${id}`,
       };
     }
-    return new Product(productById);
+    return productById;
   }
 
   async updateProduct(id, newProduct) {
-    const products = await this.getProducts();
-
     if (newProduct.id) {
       throw new Error("No se puede cambiar el id");
     }
 
-    const updatedProducts = products.map((currentProduct) =>
-      currentProduct.id !== id
-        ? currentProduct
-        : new Product({ ...currentProduct, ...newProduct })
+    const products = await this.getProducts();
+    let productIndex = products.findIndex(
+      (currentProduct) => currentProduct.id === id
     );
+    if (productIndex === -1) {
+      throw new Error(`No existe un producto con el id ${id}`);
+    }
 
-    await this.#saveProducts(updatedProducts);
+    products[productIndex] = new ProductManager({
+      ...products[productIndex],
+      ...newProduct,
+    });
+
+    await this.#saveProducts(products);
+
+    return products[productIndex];
   }
 
   async deleteProduct(id) {

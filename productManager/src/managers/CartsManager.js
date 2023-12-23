@@ -1,15 +1,25 @@
 import * as fs from "node:fs/promises";
-import { ProductManager } from "./ProductManager.js";
+import { ProductsManager } from "./ProductsManager.js";
 import { PRODUCTS_FILE_PATH } from "../filenameUtils.js";
 
-export class Carts {
-  productManager = new ProductManager({
+export class CartsManager {
+  productManager = new ProductsManager({
     nombre: "Admin",
     path: PRODUCTS_FILE_PATH,
   });
 
   constructor(props) {
     this.path = props.path;
+  }
+
+  async createCart() {
+    const carts = await this.getCarts();
+    const cid = carts.length + 1;
+    carts.push({ cid: cid, products: [] });
+
+    await this.#saveCart(carts);
+
+    return cid;
   }
 
   async addProduct({ cid, productId, quantity }) {
@@ -26,41 +36,39 @@ export class Carts {
 
     const product = await this.productManager.getProductById(productId);
 
-    const carts = await this.#addProductQuantity(cid, productId, quantity);
-
-    await this.#saveCart(carts);
-    return product;
+    try {
+      const carts = await this.#addProductQuantity(cid, productId, quantity);
+      await this.#saveCart(carts);
+      return product;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async #addProductQuantity(cid, productId, quantity) {
     let carts = await this.getCarts();
-    if (!carts) {
-      return { [cid]: [{ productId, quantity }] };
+    const cartIndex = carts.findIndex((cart) => cart.cid === cid);
+    if (cartIndex === -1) {
+      throw Error("No existe el carrito, tenés que crearlo primero");
     }
 
-    const cart = carts?.[cid];
-    if (!cart) {
-      carts[cid] = [{ productId, quantity }];
-      return carts;
-    }
+    const productIndex = carts[cartIndex].products?.findIndex(
+      (element) => element.productId === productId
+    );
 
-    const product = cart?.find((element) => element.productId === productId);
-
-    if (product) {
-      product.quantity += quantity;
+    if (productIndex === -1) {
+      carts[cartIndex].products.push({ quantity, productId });
     } else {
-      carts[cid].push({ productId, quantity });
+      carts[cartIndex].products[productIndex].quantity += quantity;
     }
     return carts;
   }
 
-  async getCart(cuid) {
-    try {
-      const carts = await this.getCarts();
-      return carts?.[cuid];
-    } catch (error) {
-      return [];
-    }
+  async getCart(cid) {
+    const carts = await this.getCarts();
+    const cart = carts.findIndex(({ id }) => id === cid);
+    if (cart === -1) throw Error("El carrito no fue encontrado");
+    return cart;
   }
 
   async getCarts() {
@@ -70,7 +78,7 @@ export class Carts {
       });
       return JSON.parse(productsFile);
     } catch (error) {
-      return undefined;
+      return [];
     }
   }
 

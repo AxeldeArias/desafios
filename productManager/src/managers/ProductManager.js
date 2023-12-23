@@ -1,4 +1,4 @@
-export class Product {
+export class ProductManager {
   id;
   title;
   description;

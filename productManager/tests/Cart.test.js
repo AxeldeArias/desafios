@@ -5,10 +5,10 @@ import {
   CART_PATH,
   PRODUCTS_FILE_PATH,
   LAST_ID_PATH,
-} from "../src/filenameUtils.js";
-import { Carts } from "../src/models/Carts.js";
-import { ProductManager } from "../src/models/ProductManager.js";
-import { atunProduct, sojaProduct } from "./constants.js";
+} from "../src/filenameUtils";
+import { CartsManager } from "../src/managers/CartsManager";
+import { ProductsManager } from "../src/managers/ProductsManager";
+import { atunProduct, sojaProduct } from "./constants-test";
 
 beforeEach(async () => {
   try {
@@ -25,15 +25,16 @@ beforeEach(async () => {
 });
 
 test("init with empty product list", async () => {
-  const carts = new Carts({
+  const carts = new CartsManager({
     path: CART_PATH,
   });
 
-  expect(await carts.getCarts()).toBeUndefined();
+  await carts.createCart();
+  expect(await carts.getCarts()).toEqual([{ cid: 1, products: [] }]);
 });
 
 test("add Products to a cart", async () => {
-  const productManager = new ProductManager({
+  const productManager = new ProductsManager({
     nombre: "Admin",
     path: PRODUCTS_FILE_PATH,
   });
@@ -41,9 +42,11 @@ test("add Products to a cart", async () => {
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
-  const carts = new Carts({
+  const carts = new CartsManager({
     path: CART_PATH,
   });
+  const cid = await carts.createCart();
+  console.log({ cid });
 
   await carts.addProduct({ cid: 1, productId: 1, quantity: 1 });
   await carts.addProduct({ cid: 1, productId: 2, quantity: 1 });
@@ -51,22 +54,19 @@ test("add Products to a cart", async () => {
   await carts.addProduct({ cid: 1, productId: 2, quantity: 3 });
   const result = await carts.getCarts();
 
-  expect(result).toEqual({
-    1: [
-      {
-        productId: 1,
-        quantity: 3,
-      },
-      {
-        productId: 2,
-        quantity: 4,
-      },
-    ],
-  });
+  expect(result).toEqual([
+    {
+      cid: 1,
+      products: [
+        { productId: 1, quantity: 3 },
+        { productId: 2, quantity: 4 },
+      ],
+    },
+  ]);
 });
 
 test("add Products to different carts", async () => {
-  const productManager = new ProductManager({
+  const productManager = new ProductsManager({
     nombre: "Admin",
     path: PRODUCTS_FILE_PATH,
   });
@@ -74,9 +74,14 @@ test("add Products to different carts", async () => {
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
-  const carts = new Carts({
+  const carts = new CartsManager({
     path: CART_PATH,
   });
+
+  await carts.createCart();
+  await carts.createCart();
+  await carts.createCart();
+
   await carts.addProduct({ cid: 1, productId: 1, quantity: 1 });
   await carts.addProduct({ cid: 1, productId: 2, quantity: 1 });
   await carts.addProduct({ cid: 1, productId: 2, quantity: 1 });
@@ -90,34 +95,27 @@ test("add Products to different carts", async () => {
 
   const result = await carts.getCarts();
 
-  expect(result).toEqual({
-    1: [
-      {
-        productId: 1,
-        quantity: 2,
-      },
-      {
-        productId: 2,
-        quantity: 2,
-      },
-    ],
-    2: [
-      {
-        productId: 1,
-        quantity: 1,
-      },
-    ],
-    3: [
-      {
-        productId: 2,
-        quantity: 3,
-      },
-    ],
-  });
+  expect(result).toEqual([
+    {
+      cid: 1,
+      products: [
+        { productId: 1, quantity: 2 },
+        { productId: 2, quantity: 2 },
+      ],
+    },
+    {
+      cid: 2,
+      products: [{ productId: 1, quantity: 1 }],
+    },
+    {
+      cid: 3,
+      products: [{ productId: 2, quantity: 3 }],
+    },
+  ]);
 });
 
 test("add Product - throw product not exist error", async () => {
-  const carts = new Carts({
+  const carts = new CartsManager({
     path: CART_PATH,
   });
   expect(
