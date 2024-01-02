@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { ProductsManager } from "../managers/ProductsManager.js";
-import { emitSocketEvent } from "../utils/socketUtils.js";
+import { emitSocketEventToAll } from "../utils/socketUtils.js";
 
 const productRouter = Router();
 
@@ -58,6 +58,7 @@ productRouter.get("/:pid", async (req, res) => {
 
 productRouter.post("/", async (req, res) => {
   const { code, description, price, stock, thumbnail, title } = req.body;
+
   if (
     !req.body ||
     !code ||
@@ -91,9 +92,9 @@ productRouter.post("/", async (req, res) => {
       title,
     });
 
-    emitSocketEvent(req, res, "products", products);
+    emitSocketEventToAll(req, res, "products", products);
 
-    res.status(200).send({
+    return res.status(200).send({
       status: "success",
       product: products,
     });
@@ -142,15 +143,18 @@ productRouter.delete("/:pid", async (req, res) => {
   }
 
   try {
-    const newProduct = await productManager.deleteProduct(pid, {
+    const products = await productManager.deleteProduct(pid, {
       ...req.body,
     });
+
+    emitSocketEventToAll(req, res, "products", products);
+
     return res.status(200).send({
       status: "success",
-      product: newProduct,
+      product: products,
     });
   } catch (error) {
-    return res.status(400).send({
+    return res.status(500).send({
       status: "error",
       error: error?.message ?? "",
     });

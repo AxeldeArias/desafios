@@ -1,0 +1,24 @@
+[
+  {
+    "id": 24,
+    "title": "oso",
+    "description": "description",
+    "price": 200,
+    "thumbnail": [
+      "thumbnail"
+    ],
+    "code": "Codeewewewe",
+    "stock": 2
+  },
+  {
+    "id": 25,
+    "title": "oso",
+    "description": "description",
+    "price": 200,
+    "thumbnail": [
+      "thumbnail"
+    ],
+    "code": "Codeewewew2323e",
+    "stock": 2
+  }
+]

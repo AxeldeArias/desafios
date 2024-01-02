@@ -97,6 +97,7 @@ export class ProductsManager {
     products.splice(indexToDelete, 1);
 
     await this.#saveProducts(products);
+    return products;
   }
 
   async #getNewId() {

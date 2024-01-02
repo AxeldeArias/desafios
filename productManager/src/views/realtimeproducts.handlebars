@@ -1,5 +1,5 @@
 
-<h1>Products</h1>
+<h1>Realtime Products</h1>
 
 <main>
     <form id="product-form">
@@ -12,8 +12,8 @@
         <label for="price">Price</label>
         <input type="number" id="price" name="price" placeholder="Price" value="200" />
 
-        <label for="thumbnail">Thumbnail</label>
-        <input type="text" id="thumbnail" name="thumbnail" placeholder="Thumbnail"  value="thumbnail" />
+        <label for="thumbnail">Thumbnail (separated by ;)</label>
+        <textarea max="500" rows="4" type="text" id="thumbnail" name="thumbnail" placeholder="url1;url2;url3"  value="thumbnail" ></textarea>
 
         <label for="code">Code</label>
         <input type="text" id="code" name="code" placeholder="Code"  value="Code" />
@@ -23,27 +23,29 @@
 
         <input type="submit" value="submit" />
     </form>
-      <ol>
+      <ol id="ol-products">
         {{#each products}}
             <li>
                 <div class="row">
                     <ul>
-                            <li>id: {{this.id}}</li>
-                            <li>code: {{this.code}}</li>
-                            <li>title: {{this.title}}</li>
-                            <li>description: {{this.description}}</li>
-                            <li>price: {{this.price}}</li>
-                            <li>thumbnail: {{this.thumbnail}}</li>
-                            <li>stock: {{this.stock}}</li>
+                        <li>id: {{this.id}}</li>
+                        <li>code: {{this.code}}</li>
+                        <li>title: {{this.title}}</li>
+                        <li>description: {{this.description}}</li>
+                        <li>price: {{this.price}}</li>
+                        <li>thumbnail: {{this.thumbnail}}</li>
+                        <li>stock: {{this.stock}}</li>
                     </ul>
                     <button class="buttons" data-id="{{this.id}}">Delete</button>
                 </div>
-                </li>
+            </li>
         {{/each}}
     </ol>
-					
+
 </main>
 
 
-<script type="module" src="./utils/addClickEventListener.js"></script>
-<script type="module" src="/js/index.js"></script>
+<script type="module" src="/js/addClickEventListener.js"></script>
+<script type="module" src="/socket.io/socket.io.js"></script>
+<script  type="module" src="/js/index.js"></script>
+<script  type="module" src="/js/realtimeproducts.js"></script>
