@@ -2,7 +2,7 @@ import express from "express";
 import productRouter from "./routers/products.route.js";
 import cartsRouter from "./routers/carts.route.js";
 import handlebars from "express-handlebars";
-import { APP_PATH } from "./utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "./utils/filenameUtils.js";
 import { Server as ServerIO } from "socket.io";
 
 const PORT = 8080;
@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 // Handlebars
 app.engine("handlebars", handlebars.engine());
-app.set("views", APP_PATH.viewsPath);
+app.set("views", ABSOLUTE_PATHS.viewsPath);
 app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => {

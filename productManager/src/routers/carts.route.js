@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { APP_PATH } from "../utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { CartsManager } from "../managers/CartsManager.js";
 
 const cartsRouter = Router();
 
-const carts = new CartsManager({ path: APP_PATH.cart });
+const carts = new CartsManager({ path: ABSOLUTE_PATHS.cart });
 
 cartsRouter.post("/", async (_req, res) => {
   try {

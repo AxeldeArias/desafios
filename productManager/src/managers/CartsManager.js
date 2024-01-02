@@ -1,11 +1,11 @@
 import * as fs from "node:fs/promises";
 import { ProductsManager } from "./ProductsManager.js";
-import { APP_PATH } from "../utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 
 export class CartsManager {
   productManager = new ProductsManager({
     nombre: "Admin",
-    path: APP_PATH.productsFiles,
+    path: ABSOLUTE_PATHS.productsFiles,
   });
 
   constructor(props) {

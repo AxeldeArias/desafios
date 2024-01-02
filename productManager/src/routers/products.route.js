@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { APP_PATH } from "../utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { ProductsManager } from "../managers/ProductsManager.js";
 import { emitSocketEvent } from "../utils/socketUtils.js";
 
@@ -7,7 +7,7 @@ const productRouter = Router();
 
 const productManager = new ProductsManager({
   nombre: "server",
-  path: APP_PATH.productsFiles,
+  path: ABSOLUTE_PATHS.productsFiles,
 });
 
 productRouter.get("/", async (req, res) => {
