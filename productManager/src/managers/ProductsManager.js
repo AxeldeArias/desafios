@@ -1,6 +1,6 @@
 import { ProductManager } from "./ProductManager.js";
 import * as fs from "node:fs/promises";
-import { LAST_ID_PATH, __dirname } from "../utils/filenameUtils.js";
+import { APP_PATH, __dirname } from "../utils/filenameUtils.js";
 
 export class ProductsManager {
   nombre;
@@ -102,7 +102,7 @@ export class ProductsManager {
   async #getNewId() {
     let lastId;
     try {
-      const lastIdString = await fs.readFile(LAST_ID_PATH, {
+      const lastIdString = await fs.readFile(APP_PATH.lastIdPath, {
         encoding: "utf-8",
       });
       lastId = Number(lastIdString);
@@ -110,7 +110,7 @@ export class ProductsManager {
     } catch (error) {
       lastId = 1;
     } finally {
-      await fs.writeFile(LAST_ID_PATH, `${lastId + 1}`, {
+      await fs.writeFile(APP_PATH.lastIdPath, `${lastId + 1}`, {
         encoding: "utf-8",
       });
     }

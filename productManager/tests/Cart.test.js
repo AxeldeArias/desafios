@@ -1,32 +1,28 @@
 import { expect, test } from "vitest";
 import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
-import {
-  CART_PATH,
-  PRODUCTS_FILE_PATH,
-  LAST_ID_PATH,
-} from "../src/utils/filenameUtils";
+import { APP_PATH } from "../src/utils/filenameUtils";
 import { CartsManager } from "../src/managers/CartsManager";
 import { ProductsManager } from "../src/managers/ProductsManager";
 import { atunProduct, sojaProduct } from "./constants-test";
 
 beforeEach(async () => {
   try {
-    await fs.unlink(CART_PATH);
+    await fs.unlink(APP_PATH.cart);
   } catch (error) {}
 
   try {
-    await fs.unlink(PRODUCTS_FILE_PATH);
+    await fs.unlink(APP_PATH.productsFiles);
   } catch (error) {}
 
   try {
-    await fs.unlink(LAST_ID_PATH);
+    await fs.unlink(APP_PATH.lastIdPath);
   } catch (error) {}
 });
 
 test("init with empty product list", async () => {
   const carts = new CartsManager({
-    path: CART_PATH,
+    path: APP_PATH.cart,
   });
 
   await carts.createCart();
@@ -36,14 +32,14 @@ test("init with empty product list", async () => {
 test("add Products to a cart", async () => {
   const productManager = new ProductsManager({
     nombre: "Admin",
-    path: PRODUCTS_FILE_PATH,
+    path: APP_PATH.productsFiles,
   });
 
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
   const carts = new CartsManager({
-    path: CART_PATH,
+    path: APP_PATH.cart,
   });
   const cid = await carts.createCart();
   console.log({ cid });
@@ -68,14 +64,14 @@ test("add Products to a cart", async () => {
 test("add Products to different carts", async () => {
   const productManager = new ProductsManager({
     nombre: "Admin",
-    path: PRODUCTS_FILE_PATH,
+    path: APP_PATH.productsFiles,
   });
 
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
   const carts = new CartsManager({
-    path: CART_PATH,
+    path: APP_PATH.cart,
   });
 
   await carts.createCart();
@@ -116,7 +112,7 @@ test("add Products to different carts", async () => {
 
 test("add Product - throw product not exist error", async () => {
   const carts = new CartsManager({
-    path: CART_PATH,
+    path: APP_PATH.cart,
   });
   expect(
     carts.addProduct({ cid: 1, productId: 1, quantity: 1 })
