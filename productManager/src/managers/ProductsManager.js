@@ -1,6 +1,6 @@
 import { ProductManager } from "./ProductManager.js";
 import * as fs from "node:fs/promises";
-import { LAST_ID_PATH, __dirname } from "../filenameUtils.js";
+import { LAST_ID_PATH, __dirname } from "../utils/filenameUtils.js";
 
 export class ProductsManager {
   nombre;
@@ -34,7 +34,7 @@ export class ProductsManager {
 
     await this.#saveProducts(products);
 
-    return newProduct;
+    return products;
   }
 
   async getProducts() {

@@ -5,7 +5,7 @@ import {
   CART_PATH,
   PRODUCTS_FILE_PATH,
   LAST_ID_PATH,
-} from "../src/filenameUtils";
+} from "../src/utils/filenameUtils";
 import { CartsManager } from "../src/managers/CartsManager";
 import { ProductsManager } from "../src/managers/ProductsManager";
 import { atunProduct, sojaProduct } from "./constants-test";

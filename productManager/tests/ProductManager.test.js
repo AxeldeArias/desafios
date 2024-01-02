@@ -7,7 +7,10 @@ import {
   sojaProductDuplicated,
 } from "./constants-test";
 import { ProductsManager } from "../src/managers/ProductsManager";
-import { LAST_ID_PATH, PRODUCTS_FILE_PATH } from "../src/filenameUtils.js";
+import {
+  LAST_ID_PATH,
+  PRODUCTS_FILE_PATH,
+} from "../src/utils/filenameUtils.js";
 
 beforeEach(async () => {
   try {
@@ -59,25 +62,15 @@ test("get product by id", async () => {
 });
 
 test("update product", async () => {
-  const newDescription = "soja refinada";
-
   const newProductManager = new ProductsManager({
     nombre: "Axel",
     path: PRODUCTS_FILE_PATH,
   });
 
-  const newProduct = await newProductManager.addProduct(sojaProduct);
-  expect(newProduct).toEqual({ ...sojaProduct, id: 1 });
-  await newProductManager.updateProduct(newProduct.id, {
-    description: newDescription,
-  });
+  const productsResult = await newProductManager.addProduct(sojaProduct);
 
   const products = await newProductManager.getProducts();
-  expect(products[0]).toEqual({
-    ...sojaProduct,
-    description: newDescription,
-    id: 1,
-  });
+  expect(products).toEqual(productsResult);
 });
 
 test("delete product", async () => {

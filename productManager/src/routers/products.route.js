@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { PRODUCTS_FILE_PATH } from "../filenameUtils.js";
+import { PRODUCTS_FILE_PATH } from "../utils/filenameUtils.js";
 import { ProductsManager } from "../managers/ProductsManager.js";
+import { emitSocketEvent } from "../utils/socketUtils.js";
 
 const productRouter = Router();
 
@@ -81,7 +82,7 @@ productRouter.post("/", async (req, res) => {
   }
 
   try {
-    const newProduct = await productManager.addProduct({
+    const products = await productManager.addProduct({
       code,
       description,
       price,
@@ -90,9 +91,11 @@ productRouter.post("/", async (req, res) => {
       title,
     });
 
+    emitSocketEvent(req, res, "products", products);
+
     res.status(200).send({
       status: "success",
-      product: newProduct,
+      product: products,
     });
   } catch (error) {
     return res.status(500).send({
