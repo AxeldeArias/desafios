@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { ProductsManager } from "../managers/ProductsManager.js";
+import { ProductsFSManager } from "../Dao/ProductsFSManager.js";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 
 const viewsRouter = Router();
 
-const productManager = new ProductsManager({
+const productManager = new ProductsFSManager({
   nombre: "views",
   path: ABSOLUTE_PATHS.productsFiles,
 });

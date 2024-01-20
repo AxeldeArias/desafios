@@ -1,4 +1,4 @@
-export class ProductManager {
+export class ProductFSManager {
   id;
   title;
   description;

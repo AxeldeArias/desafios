@@ -1,9 +1,9 @@
 import * as fs from "node:fs/promises";
-import { ProductsManager } from "./ProductsManager.js";
+import { ProductsFSManager } from "./ProductsFSManager.js";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 
-export class CartsManager {
-  productManager = new ProductsManager({
+export class CartsFSManager {
+  productManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });

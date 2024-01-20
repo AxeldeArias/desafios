@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
-import { ProductsManager } from "../managers/ProductsManager.js";
+import { ProductsFSManager } from "../Dao/ProductsFSManager.js";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
 
 const productRouter = Router();
 
-const productManager = new ProductsManager({
+const productManager = new ProductsFSManager({
   nombre: "server",
   path: ABSOLUTE_PATHS.productsFiles,
 });
@@ -58,7 +58,6 @@ productRouter.get("/:pid", async (req, res) => {
 
 productRouter.post("/", async (req, res) => {
   const { code, description, price, stock, thumbnail, title } = req.body;
-
   if (
     !req.body ||
     !code ||

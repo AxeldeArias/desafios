@@ -6,6 +6,7 @@ import { ABSOLUTE_PATHS } from "./utils/filenameUtils.js";
 
 import { Server as ServerIO } from "socket.io";
 import viewsRouter from "./routers/views.route.js";
+import mongoose from "mongoose";
 
 const PORT = 8080;
 const app = express();
@@ -28,6 +29,14 @@ const httpServer = app.listen(PORT, () => {
 });
 
 const io = new ServerIO(httpServer);
+mongoose
+  .connect(
+    "mongodb+srv://axeldearias:199620@cluster0.6rocgay.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .catch((error) => {
+    console.log("error al conectar");
+    console.log(error);
+  });
 
 io.on("connection", (socket) => {
   app.set("socket", socket);
