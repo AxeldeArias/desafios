@@ -7,6 +7,7 @@ import { connectDB } from "./config/connectDB.js";
 import { ABSOLUTE_PATHS } from "./utils/filenameUtils.js";
 import { connectSocket } from "./config/connectSocket.js";
 import { listenServer } from "./config/listenServer.js";
+import chatRouter from "./routers/chat.route.js";
 
 connectDB();
 
@@ -23,6 +24,7 @@ app.set("view engine", "handlebars");
 app.use("", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/chat", chatRouter);
 
 const httpServer = listenServer(app);
 connectSocket(app, httpServer);

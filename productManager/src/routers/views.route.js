@@ -9,13 +9,16 @@ const productsBDManager = new ProductsBDManager({
   path: ABSOLUTE_PATHS.productsFiles,
 });
 
-viewsRouter.get("/", async (req, res) => {
+viewsRouter.get("/", async (_req, res) => {
   const products = await productsBDManager.getProducts();
   res.render("index.handlebars", { products });
 });
 viewsRouter.get("/realtimeproducts", async (req, res) => {
   const products = await productsBDManager.getProducts();
   res.render("realtimeproducts.handlebars", { products });
+});
+viewsRouter.get("/chat", async (_req, res) => {
+  res.render("chat.handlebars");
 });
 
 export default viewsRouter;
