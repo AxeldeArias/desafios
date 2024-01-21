@@ -1,12 +1,11 @@
 import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
-import { ProductsFSManager } from "../Dao/ProductsFSManager.js";
-import { emitSocketEventToAll } from "../utils/socketUtils.js";
 import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
+import { emitSocketEventToAll } from "../utils/socketUtils.js";
 
 const productRouter = Router();
 
-const productsFSManager = new ProductsBDManager({
+const productsManager = new ProductsBDManager({
   nombre: "server",
   path: ABSOLUTE_PATHS.productsFiles,
 });
@@ -20,7 +19,7 @@ productRouter.get("/", async (req, res) => {
     });
   }
 
-  const products = await productsFSManager.getProducts();
+  const products = await productsManager.getProducts();
 
   res.status(200).send({
     status: "success",
@@ -31,7 +30,7 @@ productRouter.get("/", async (req, res) => {
 
 productRouter.get("/:pid", async (req, res) => {
   try {
-    const product = await productsFSManager.getProductById(req.params.pid);
+    const product = await productsManager.getProductById(req.params.pid);
     res.status(200).send({ product });
   } catch (e) {
     if (e?.code === "no-exist-product") {
@@ -74,7 +73,7 @@ productRouter.post("/", async (req, res) => {
   }
 
   try {
-    const products = await productsFSManager.addProduct({
+    await productsManager.addProduct({
       code,
       description,
       price,
@@ -82,6 +81,8 @@ productRouter.post("/", async (req, res) => {
       thumbnail,
       title,
     });
+
+    const products = await productsManager.getProducts();
 
     emitSocketEventToAll(req, res, "products", products);
 
@@ -99,7 +100,7 @@ productRouter.post("/", async (req, res) => {
 
 productRouter.put("/:pid", async (req, res) => {
   try {
-    const newProduct = await productsFSManager.updateProduct(req.params.pid, {
+    const newProduct = await productsManager.updateProduct(req.params.pid, {
       ...req.body,
     });
     return res.status(200).send({
@@ -116,9 +117,11 @@ productRouter.put("/:pid", async (req, res) => {
 
 productRouter.delete("/:pid", async (req, res) => {
   try {
-    const products = await productsFSManager.deleteProduct(req.params.pid, {
+    await productsManager.deleteProduct(req.params.pid, {
       ...req.body,
     });
+
+    const products = await productsManager.getProducts();
 
     emitSocketEventToAll(req, res, "products", products);
 

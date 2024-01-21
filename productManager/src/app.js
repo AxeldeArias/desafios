@@ -25,4 +25,4 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 
 const httpServer = listenServer(app);
-connectSocket(httpServer);
+connectSocket(app, httpServer);

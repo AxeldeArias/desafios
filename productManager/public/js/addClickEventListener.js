@@ -1,8 +1,8 @@
 export function addClickEventListener() {
   document.querySelectorAll(".buttons").forEach((button) => {
     button.addEventListener("click", (event) => {
-      const id = event.target.getAttribute("data-id");
-      fetch(`/api/products/${id}`, {
+      const _id = event.target.getAttribute("data-id");
+      fetch(`/api/products/${_id}`, {
         method: "DELETE",
       });
     });

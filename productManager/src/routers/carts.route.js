@@ -5,7 +5,7 @@ import { cartModel } from "../Dao/models/cart.model.js";
 
 const cartsRouter = Router();
 
-const carts = new CartsBDManager({ path: ABSOLUTE_PATHS.cart });
+const cartManager = new CartsBDManager({ path: ABSOLUTE_PATHS.cart });
 
 cartsRouter.post("/", async (_req, res) => {
   try {
@@ -49,7 +49,7 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
   const { quantity } = req.body;
 
   try {
-    const product = await carts.addProduct({
+    const product = await cartManager.addProduct({
       cid: req.params.cid,
       productId: req.params.pid,
       quantity: quantity ?? 1,

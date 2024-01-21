@@ -1,5 +1,4 @@
-import * as fs from "node:fs/promises";
-import { ABSOLUTE_PATHS, __dirname } from "../utils/filenameUtils.js";
+import { __dirname } from "../utils/filenameUtils.js";
 import { productsModel } from "./models/products.model.js";
 
 export class ProductsBDManager {
@@ -31,7 +30,8 @@ export class ProductsBDManager {
   }
 
   async getProducts() {
-    return productsModel.find();
+    const products = await productsModel.find().lean();
+    return products;
   }
 
   async getProductById(id) {

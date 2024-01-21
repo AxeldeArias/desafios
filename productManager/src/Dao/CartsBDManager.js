@@ -1,4 +1,3 @@
-import * as fs from "node:fs/promises";
 import { ProductsBDManager } from "./ProductsBDManager.js";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { cartModel } from "./models/cart.model.js";
