@@ -1,6 +1,5 @@
 import * as fs from "node:fs/promises";
 import { ABSOLUTE_PATHS, __dirname } from "../utils/filenameUtils.js";
-import { productsModel } from "../models/products.model.js";
 
 export class ProductsFSManager {
   nombre;
@@ -19,10 +18,8 @@ export class ProductsFSManager {
     if (products.find((currentProduct) => currentProduct.code === code)) {
       throw new Error("El producto ya fue ingresado");
     }
-    console.log("entre3");
 
     const newId = await this.#getNewId();
-    console.log("entre4");
 
     const newProduct = new ProductManager({
       id: newId,
@@ -35,8 +32,6 @@ export class ProductsFSManager {
     });
 
     products.push(newProduct);
-    await this.#saveProduct(newProduct);
-
     await this.#saveProducts(products);
 
     return products;
@@ -127,15 +122,5 @@ export class ProductsFSManager {
     await fs.writeFile(this.path, JSON.stringify(products, null, 2), {
       encoding: "utf-8",
     });
-  }
-
-  async #saveProduct(product) {
-    console.log("entre");
-    try {
-      const result = await productsModel.create(product);
-      console.log(result);
-    } catch (error) {
-      console.log({ error });
-    }
   }
 }

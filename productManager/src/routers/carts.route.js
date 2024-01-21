@@ -1,17 +1,18 @@
 import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
-import { CartsFSManager } from "../Dao/CartsFSManager.js";
+import { CartsBDManager } from "../Dao/CartsBDManager.js";
+import { cartModel } from "../Dao/models/cart.model.js";
 
 const cartsRouter = Router();
 
-const carts = new CartsFSManager({ path: ABSOLUTE_PATHS.cart });
+const carts = new CartsBDManager({ path: ABSOLUTE_PATHS.cart });
 
 cartsRouter.post("/", async (_req, res) => {
   try {
-    const cartId = await carts.createCart();
+    const cart = await cartModel.create({ products: [] });
     return res.status(200).send({
       status: "success",
-      data: { cartId },
+      data: { cartId: cart._id },
     });
   } catch (error) {
     return res.status(500).send({
@@ -22,7 +23,7 @@ cartsRouter.post("/", async (_req, res) => {
 });
 
 cartsRouter.get("/", async (_req, res) => {
-  const result = await carts.getCarts();
+  const result = await cartModel.find();
   return res.status(200).send({
     status: "success",
     data: { carts: result },
@@ -30,16 +31,8 @@ cartsRouter.get("/", async (_req, res) => {
 });
 
 cartsRouter.get("/:cid", async (req, res) => {
-  const cid = Number(req.params.cid);
-
-  if (Number.isNaN(cid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "cid no es numérico",
-    });
-  }
   try {
-    const cartList = await carts.getCart(cid);
+    const cartList = await cartModel.findById(req.params.cid);
     return res.status(200).send({
       status: "success",
       data: cartList,
@@ -53,28 +46,12 @@ cartsRouter.get("/:cid", async (req, res) => {
 });
 
 cartsRouter.post("/:cid/product/:pid", async (req, res) => {
-  const cid = Number(req.params.cid);
-  const pid = Number(req.params.pid);
   const { quantity } = req.body;
-
-  if (Number.isNaN(cid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "cid no es numérico",
-    });
-  }
-
-  if (Number.isNaN(pid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "pid no es numérico",
-    });
-  }
 
   try {
     const product = await carts.addProduct({
-      cid,
-      productId: Number(pid),
+      cid: req.params.cid,
+      productId: req.params.pid,
       quantity: quantity ?? 1,
     });
     return res.status(200).send({

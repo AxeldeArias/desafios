@@ -2,10 +2,11 @@ import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { ProductsFSManager } from "../Dao/ProductsFSManager.js";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
+import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
 
 const productRouter = Router();
 
-const productManager = new ProductsFSManager({
+const productManager = new ProductsBDManager({
   nombre: "server",
   path: ABSOLUTE_PATHS.productsFiles,
 });
@@ -29,17 +30,8 @@ productRouter.get("/", async (req, res) => {
 });
 
 productRouter.get("/:pid", async (req, res) => {
-  const pid = Number(req.params.pid);
-
-  if (Number.isNaN(pid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "pid no es numérico",
-    });
-  }
-
   try {
-    const product = await productManager.getProductById(pid);
+    const product = await productManager.getProductById(req.params.pid);
     res.status(200).send({ product });
   } catch (e) {
     if (e?.code === "no-exist-product") {
@@ -106,17 +98,8 @@ productRouter.post("/", async (req, res) => {
 });
 
 productRouter.put("/:pid", async (req, res) => {
-  const pid = Number(req.params.pid);
-
-  if (Number.isNaN(pid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "pid no es numérico",
-    });
-  }
-
   try {
-    const newProduct = await productManager.updateProduct(pid, {
+    const newProduct = await productManager.updateProduct(req.params.pid, {
       ...req.body,
     });
     return res.status(200).send({
@@ -132,17 +115,8 @@ productRouter.put("/:pid", async (req, res) => {
 });
 
 productRouter.delete("/:pid", async (req, res) => {
-  const pid = Number(req.params.pid);
-
-  if (Number.isNaN(pid)) {
-    return res.status(400).send({
-      status: "error",
-      error: "pid no es numérico",
-    });
-  }
-
   try {
-    const products = await productManager.deleteProduct(pid, {
+    const products = await productManager.deleteProduct(req.params.pid, {
       ...req.body,
     });
 

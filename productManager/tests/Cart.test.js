@@ -2,8 +2,8 @@ import { expect, test } from "vitest";
 import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
 import { ABSOLUTE_PATHS } from "../src/utils/filenameUtils";
-import { CartsManager } from "../src/managers/CartsManager";
-import { ProductsManager } from "../src/managers/ProductsManager";
+import { CartsFSManager } from "../src/Dao/CartsFSManager";
+import { ProductsFSManager } from "../src/Dao/ProductsFSManager";
 import { atunProduct, sojaProduct } from "./constants-test";
 
 beforeEach(async () => {
@@ -21,7 +21,7 @@ beforeEach(async () => {
 });
 
 test("init with empty product list", async () => {
-  const carts = new CartsManager({
+  const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
   });
 
@@ -30,7 +30,7 @@ test("init with empty product list", async () => {
 });
 
 test("add Products to a cart", async () => {
-  const productManager = new ProductsManager({
+  const productManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
@@ -38,7 +38,7 @@ test("add Products to a cart", async () => {
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
-  const carts = new CartsManager({
+  const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
   });
   const cid = await carts.createCart();
@@ -62,7 +62,7 @@ test("add Products to a cart", async () => {
 });
 
 test("add Products to different carts", async () => {
-  const productManager = new ProductsManager({
+  const productManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
@@ -70,7 +70,7 @@ test("add Products to different carts", async () => {
   await productManager.addProduct(sojaProduct);
   await productManager.addProduct(atunProduct);
 
-  const carts = new CartsManager({
+  const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
   });
 
@@ -111,7 +111,7 @@ test("add Products to different carts", async () => {
 });
 
 test("add Product - throw product not exist error", async () => {
-  const carts = new CartsManager({
+  const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
   });
   expect(
