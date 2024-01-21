@@ -3,7 +3,7 @@ import { ProductsFSManager } from "./ProductsFSManager.js";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 
 export class CartsFSManager {
-  productManager = new ProductsFSManager({
+  productsFSManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
@@ -34,7 +34,7 @@ export class CartsFSManager {
     }
     if (quantity < 0) throw new Error("quantity debe ser positivo");
 
-    const product = await this.productManager.getProductById(productId);
+    const product = await this.productsFSManager.getProductById(productId);
 
     try {
       const carts = await this.#addProductQuantity(cid, productId, quantity);

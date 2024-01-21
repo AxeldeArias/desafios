@@ -1,5 +1,6 @@
 import * as fs from "node:fs/promises";
 import { ABSOLUTE_PATHS, __dirname } from "../utils/filenameUtils.js";
+import { ProductFSManager } from "./ProductFSManager.js";
 
 export class ProductsFSManager {
   nombre;
@@ -21,7 +22,7 @@ export class ProductsFSManager {
 
     const newId = await this.#getNewId();
 
-    const newProduct = new ProductManager({
+    const newProduct = new ProductFSManager({
       id: newId,
       title,
       description,
@@ -76,7 +77,7 @@ export class ProductsFSManager {
       throw new Error(`No existe un producto con el id ${id}`);
     }
 
-    products[productIndex] = new ProductManager({
+    products[productIndex] = new ProductsFSManager({
       ...products[productIndex],
       ...newProduct,
     });

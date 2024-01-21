@@ -6,7 +6,7 @@ import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
 
 const productRouter = Router();
 
-const productManager = new ProductsBDManager({
+const productsFSManager = new ProductsBDManager({
   nombre: "server",
   path: ABSOLUTE_PATHS.productsFiles,
 });
@@ -20,7 +20,7 @@ productRouter.get("/", async (req, res) => {
     });
   }
 
-  const products = await productManager.getProducts();
+  const products = await productsFSManager.getProducts();
 
   res.status(200).send({
     status: "success",
@@ -31,7 +31,7 @@ productRouter.get("/", async (req, res) => {
 
 productRouter.get("/:pid", async (req, res) => {
   try {
-    const product = await productManager.getProductById(req.params.pid);
+    const product = await productsFSManager.getProductById(req.params.pid);
     res.status(200).send({ product });
   } catch (e) {
     if (e?.code === "no-exist-product") {
@@ -74,7 +74,7 @@ productRouter.post("/", async (req, res) => {
   }
 
   try {
-    const products = await productManager.addProduct({
+    const products = await productsFSManager.addProduct({
       code,
       description,
       price,
@@ -99,7 +99,7 @@ productRouter.post("/", async (req, res) => {
 
 productRouter.put("/:pid", async (req, res) => {
   try {
-    const newProduct = await productManager.updateProduct(req.params.pid, {
+    const newProduct = await productsFSManager.updateProduct(req.params.pid, {
       ...req.body,
     });
     return res.status(200).send({
@@ -116,7 +116,7 @@ productRouter.put("/:pid", async (req, res) => {
 
 productRouter.delete("/:pid", async (req, res) => {
   try {
-    const products = await productManager.deleteProduct(req.params.pid, {
+    const products = await productsFSManager.deleteProduct(req.params.pid, {
       ...req.body,
     });
 

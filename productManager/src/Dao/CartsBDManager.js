@@ -4,7 +4,7 @@ import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { cartModel } from "./models/cart.model.js";
 
 export class CartsBDManager {
-  productManager = new ProductsBDManager({
+  productsFSManager = new ProductsBDManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
@@ -35,7 +35,7 @@ export class CartsBDManager {
       throw Error("No existe el carrito, tenés que crearlo primero");
     }
 
-    const product = await this.productManager.getProductById(productId);
+    const product = await this.productsFSManager.getProductById(productId);
 
     try {
       await this.#addProductQuantity(cid, productId, quantity);

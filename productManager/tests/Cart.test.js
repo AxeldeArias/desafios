@@ -30,13 +30,13 @@ test("init with empty product list", async () => {
 });
 
 test("add Products to a cart", async () => {
-  const productManager = new ProductsFSManager({
+  const productsFSManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
 
-  await productManager.addProduct(sojaProduct);
-  await productManager.addProduct(atunProduct);
+  await productsFSManager.addProduct(sojaProduct);
+  await productsFSManager.addProduct(atunProduct);
 
   const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
@@ -62,13 +62,13 @@ test("add Products to a cart", async () => {
 });
 
 test("add Products to different carts", async () => {
-  const productManager = new ProductsFSManager({
+  const productsFSManager = new ProductsFSManager({
     nombre: "Admin",
     path: ABSOLUTE_PATHS.productsFiles,
   });
 
-  await productManager.addProduct(sojaProduct);
-  await productManager.addProduct(atunProduct);
+  await productsFSManager.addProduct(sojaProduct);
+  await productsFSManager.addProduct(atunProduct);
 
   const carts = new CartsFSManager({
     path: ABSOLUTE_PATHS.cart,
