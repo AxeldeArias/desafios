@@ -42,7 +42,6 @@ test("add Products to a cart", async () => {
     path: ABSOLUTE_PATHS.cart,
   });
   const cid = await carts.createCart();
-  console.log({ cid });
 
   await carts.addProduct({ cid: 1, productId: 1, quantity: 1 });
   await carts.addProduct({ cid: 1, productId: 2, quantity: 1 });

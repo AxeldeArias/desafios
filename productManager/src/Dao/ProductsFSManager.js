@@ -15,7 +15,6 @@ export class ProductsFSManager {
 
   async addProduct({ title, description, price, thumbnail, code, stock } = {}) {
     const products = await this.getProducts();
-    console.log({ products });
     if (products.find((currentProduct) => currentProduct.code === code)) {
       throw new Error("El producto ya fue ingresado");
     }

@@ -1,0 +1,28 @@
+<div>
+    <center>
+        <h1>Products</h1>
+        
+       <label for="productSelect">Select a cart:</label>
+        <select id="selectCart" name="cart">
+            {{#each carts}}
+                <option value={{this._id}}>{{this._id}}</option>
+            {{/each}}
+        </select>
+
+        <a type="button" href="/carts/12312" value="facebook" target="_blank" class="button" id="seeButton">see cart</a>
+
+        {{#each products}}
+            <p><strong> Id: </strong>{{this.id}} - <strong>Product: </strong>{{this.title}} - <strong>description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}} <button class="addToCart" data-id="{{this._id}}">add to cart</button></p>
+        {{/each}}
+        {{#if hasPrevPage}}
+            <a href="/products?pageQuery={{prevPage}}">Anterior</a>
+        {{/if}}
+        <label>{{page}}</label>
+        {{#if hasNextPage}}
+            <a href="/products?pageQuery={{nextPage}}">Siguiente</a>
+        {{/if}}
+
+    </center>
+</div>
+
+<script type="module" src="/js/addProductToCart.js"></script>

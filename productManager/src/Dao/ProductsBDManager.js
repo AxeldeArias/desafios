@@ -3,13 +3,10 @@ import { productsModel } from "./models/products.model.js";
 
 export class ProductsBDManager {
   nombre;
-  path;
 
-  constructor({ nombre, path }) {
+  constructor({ nombre }) {
     if (!nombre) throw new Error("nombre es requerido");
-    if (!path) throw new Error("path es requerido");
     this.nombre = nombre;
-    this.path = path;
   }
 
   async addProduct({ title, description, price, thumbnail, code, stock } = {}) {
@@ -29,8 +26,18 @@ export class ProductsBDManager {
     });
   }
 
-  async getProducts() {
-    const products = await productsModel.find().lean();
+  async getProducts({
+    limit = 10,
+    page = 1,
+    query = {},
+    sort = undefined,
+  } = {}) {
+    const products = await productsModel.paginate(query, {
+      limit,
+      page,
+      lean: true,
+      sort,
+    });
     return products;
   }
 

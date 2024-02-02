@@ -7,11 +7,11 @@ const productRouter = Router();
 
 const productsManager = new ProductsBDManager({
   nombre: "server",
-  path: ABSOLUTE_PATHS.productsFiles,
 });
 
 productRouter.get("/", async (req, res) => {
-  const { limit } = req.query;
+  const { limit, page, sort, query } = req.query;
+
   if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
     return res.status(400).send({
       status: "bad request",
@@ -19,12 +19,27 @@ productRouter.get("/", async (req, res) => {
     });
   }
 
-  const products = await productsManager.getProducts();
+  if (sort && !["asc", "desc"].includes(sort)) {
+    return res.status(400).send({
+      status: "bad request",
+      description: "invalid sort query",
+    });
+  }
 
+  const sortQuery = sort === "asc" ? { _id: 1 } : { _id: -1 };
+
+  const products = await productsManager.getProducts({
+    limit,
+    page,
+    sort,
+    query,
+    sort: sortQuery,
+  });
+
+  console.log({ products });
   res.status(200).send({
     status: "success",
-    products:
-      !!limit && products.length > limit ? products.slice(0, limit) : products,
+    products: products,
   });
 });
 

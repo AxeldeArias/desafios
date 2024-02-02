@@ -11,7 +11,6 @@ Swal.fire({
   allowOutsideClick: false,
 }).then((result) => {
   user = result.value;
-  console.log("entree");
   fetch(`/api/chat`, {
     method: "GET",
     headers: {
@@ -44,7 +43,6 @@ chatbox.addEventListener("keyup", (evt) => {
 });
 
 socket.on("chat", (data) => {
-  console.log("entree", { data });
   let messageLogs = document.querySelector("#messageLogs");
   let mensajes = "";
   data.forEach((mensaje) => {
