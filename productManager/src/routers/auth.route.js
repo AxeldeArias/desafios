@@ -12,14 +12,11 @@ authRouter.get("/setcookies", async (req, res) => {
     .send("cookie seteada");
 });
 
-// archivo de texto { coderCookie: 'esta es la info de la cookie' }
-
 authRouter.get("/getcookies", (req, res) => {
   console.log(req.cookies);
   res.send(req.cookies);
 });
 
-// Ruta con cookie firmadas
 authRouter.get("/setsignedcookies", async (req, res) => {
   res
     .cookie("coderCookie", "esta es la info de la cookie firmada y poderosa", {
@@ -29,7 +26,6 @@ authRouter.get("/setsignedcookies", async (req, res) => {
     .send("cookie seteada");
 });
 
-// Ruta con cookie firmadas
 authRouter.get("/getsignedcookies", (req, res) => {
   console.log(req.signedCookies);
   res.send(req.signedCookies);
