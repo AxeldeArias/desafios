@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
-import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
 import { CartsBDManager } from "../Dao/CartsBDManager.js";
+import { userAuth } from "../middlewares/auth.js";
 
 const viewsRouter = Router();
 
@@ -11,10 +11,17 @@ const productsBDManager = new ProductsBDManager({
 
 const cartManager = new CartsBDManager();
 
-viewsRouter.get("/", async (_req, res) => {
-  const products = await productsBDManager.getProducts();
-  res.render("index.handlebars", { products });
+viewsRouter.get("/", async (req, res) => {
+  const { registered } = req.query;
+  res.render("login", {
+    description: registered ? "usuario registrado correctamente" : "",
+  });
 });
+
+viewsRouter.get("/register", async (_req, res) => {
+  res.render("register");
+});
+
 viewsRouter.get("/realtimeproducts", async (req, res) => {
   const products = await productsBDManager.getProducts();
   res.render("realtimeproducts.handlebars", { products });
@@ -22,7 +29,7 @@ viewsRouter.get("/realtimeproducts", async (req, res) => {
 viewsRouter.get("/chat", async (_req, res) => {
   res.render("chat.handlebars");
 });
-viewsRouter.get("/products", async (req, res) => {
+viewsRouter.get("/products", userAuth, async (req, res) => {
   const { limit = 1, pageQuery = 1 } = req.query;
   const products = await productsBDManager.getProducts({
     limit,
@@ -33,6 +40,7 @@ viewsRouter.get("/products", async (req, res) => {
     ...products,
     products: products.docs,
     carts: carts,
+    user: req.session.user,
   });
 });
 

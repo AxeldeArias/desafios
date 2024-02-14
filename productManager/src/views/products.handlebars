@@ -1,8 +1,14 @@
 <div>
-    <center>
-        <h1>Products</h1>
         
+        <header>
+        <h1>Hi {{user.name}} your role is {{user.role}}.</h1>
+        <h4>email: {{user.email}} </h4>
+        </header>
+
+
+        <h2>Products</h2>
        <label for="productSelect">Select a cart:</label>
+
         <select id="selectCart" name="cart">
             {{#each carts}}
                 <option value={{this._id}}>{{this._id}}</option>
@@ -21,8 +27,10 @@
         {{#if hasNextPage}}
             <a href="/products?pageQuery={{nextPage}}">Siguiente</a>
         {{/if}}
-
-    </center>
+        <br>
+        <br>
+        <br>
+        <a href="/logout" class="button">Logout</a>
 </div>
 
 <script type="module" src="/js/addProductToCart.js"></script>

@@ -3,11 +3,15 @@ import productRouter from "./routers/products.route.js";
 import cartsRouter from "./routers/carts.route.js";
 import handlebars from "express-handlebars";
 import viewsRouter from "./routers/views.route.js";
-import { connectDB } from "./config/connectDB.js";
+import { connectDB, connectMongoStore } from "./config/connectDB.js";
 import { ABSOLUTE_PATHS } from "./utils/filenameUtils.js";
 import { connectSocket } from "./config/connectSocket.js";
 import { listenServer } from "./config/listenServer.js";
 import chatRouter from "./routers/chat.route.js";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import { SECRET } from "./config/session.js";
+import authRouter from "./routers/auth.route.js";
 
 connectDB();
 
@@ -17,11 +21,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+app.use(cookieParser(SECRET));
+app.use(
+  session({
+    store: connectMongoStore(),
+    secret: SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
 app.engine("handlebars", handlebars.engine());
 app.set("views", ABSOLUTE_PATHS.viewsPath);
 app.set("view engine", "handlebars");
 
 app.use("", viewsRouter);
+app.use("/", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/chat", chatRouter);
