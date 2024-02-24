@@ -36,7 +36,6 @@ productRouter.get("/", async (req, res) => {
     sort: sortQuery,
   });
 
-  console.log({ products });
   res.status(200).send({
     status: "success",
     products: products,

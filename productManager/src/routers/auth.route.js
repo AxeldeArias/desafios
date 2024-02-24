@@ -49,21 +49,15 @@ authRouter.get("/session", (req, res) => {
 authRouter.post(
   "/register",
   Passport.authenticate("register", {
-    failureRedirect: "/api/sessions/failregister",
-  }),
-  async (_req, res) => {
-    return res.status(200).redirect("/?registered=true");
-  }
+    failureRedirect: "/register?noRegistered=true",
+    successRedirect: "/?registered=true",
+  })
 );
-
-authRouter.get("/failregister", async (req, res) => {
-  res.send({ error: "falla en el register" });
-});
 
 authRouter.post(
   "/login",
   Passport.authenticate("login", {
-    failureRedirect: "/api/sessions/faillogin",
+    failureRedirect: "/?noLogin=true",
   }),
   async (req, res) => {
     if (!req.user)
@@ -81,10 +75,6 @@ authRouter.post(
     res.status(200).redirect("/products");
   }
 );
-
-authRouter.get("/faillogin", async (req, res) => {
-  res.send({ error: "falla en el register" });
-});
 
 authRouter.get("/current", async (req, res) => {
   res.send({ message: "datos sensibles" });

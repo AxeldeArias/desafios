@@ -12,14 +12,21 @@ const productsBDManager = new ProductsBDManager({
 const cartManager = new CartsBDManager();
 
 viewsRouter.get("/", async (req, res) => {
-  const { registered } = req.query;
+  const { registered, noLogin } = req.query;
+  const description = noLogin
+    ? "error al ingresar"
+    : registered
+    ? "usuario registrado correctamente"
+    : "";
   res.render("login", {
-    description: registered ? "usuario registrado correctamente" : "",
+    description,
   });
 });
 
-viewsRouter.get("/register", async (_req, res) => {
-  res.render("register");
+viewsRouter.get("/register", async (req, res) => {
+  const { noRegistered } = req.query;
+  const description = noRegistered ? "error al crear usuario" : "";
+  res.render("register", { description });
 });
 
 viewsRouter.get("/realtimeproducts", async (req, res) => {

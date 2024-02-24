@@ -29,7 +29,7 @@ export const initializePassport = () => {
           };
 
           let result = await usersManager.create(newUser);
-          // done funciona como el next
+
           return done(null, result);
         } catch (error) {
           console.log({ error });
