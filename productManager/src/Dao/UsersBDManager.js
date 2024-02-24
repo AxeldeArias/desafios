@@ -1,11 +1,14 @@
 import { userModel } from "./models/users.model.js";
 
 export class UsersBDManager {
-  async getUser({ password, email }) {
-    return await userModel.findOne({ email, password });
+  async getUser({ email }) {
+    return await userModel.findOne({ email });
+  }
+  async getUserById(id) {
+    return await userModel.findOne({ _id: id });
   }
   async create({ first_name, last_name, email, password }) {
-    await userModel.create({ first_name, last_name, email, password });
+    return await userModel.create({ first_name, last_name, email, password });
   }
 
   async getSession({ email, password }) {

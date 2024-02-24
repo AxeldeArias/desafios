@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UsersBDManager } from "../Dao/UsersBDManager.js";
 import { saveSession } from "../utils/saveSession.js";
+import Passport from "passport";
 
 const authRouter = Router();
 
@@ -45,44 +46,48 @@ authRouter.get("/session", (req, res) => {
   }
 });
 
-authRouter.post("/register", async (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
+authRouter.post(
+  "/register",
+  Passport.authenticate("register", {
+    failureRedirect: "/api/sessions/failregister",
+  }),
+  async (_req, res) => {
+    return res.status(200).redirect("/?registered=true");
+  }
+);
 
-  const exist = await usersManager.getUser({ email, password });
-
-  if (exist)
-    return res
-      .status(401)
-      .send({ status: "error", message: "Usuario ya existe" });
-
-  await usersManager.create({
-    first_name,
-    last_name,
-    email,
-    password,
-  });
-
-  return res.status(200).redirect("/?registered=true");
+authRouter.get("/failregister", async (req, res) => {
+  res.send({ error: "falla en el register" });
 });
 
-authRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+authRouter.post(
+  "/login",
+  Passport.authenticate("login", {
+    failureRedirect: "/api/sessions/faillogin",
+  }),
+  async (req, res) => {
+    if (!req.user)
+      return res
+        .status(401)
+        .send({ status: "error", message: "Usuario o contraseña incorrectos" });
 
-  const userSession = await usersManager.getSession({
-    email,
-    password,
-  });
+    const userSession = await usersManager.getSession({
+      email: req.user.email,
+    });
 
-  if (!userSession) {
-    return res
-      .status(401)
-      .send({ status: "error", message: "Usuario o contraseña incorrectos" });
+    req.session.user = userSession;
+    await saveSession(req.session);
+
+    res.status(200).redirect("/products");
   }
+);
 
-  req.session.user = userSession;
-  await saveSession(req.session);
+authRouter.get("/faillogin", async (req, res) => {
+  res.send({ error: "falla en el register" });
+});
 
-  res.status(200).redirect("/products");
+authRouter.get("/current", async (req, res) => {
+  res.send({ message: "datos sensibles" });
 });
 
 authRouter.get("/logout", async (req, res) => {

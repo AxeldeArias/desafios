@@ -12,6 +12,8 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { SECRET } from "./config/session.js";
 import authRouter from "./routers/auth.route.js";
+import Passport from "passport";
+import { initializePassport } from "./config/Passport.js";
 
 connectDB();
 
@@ -30,6 +32,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+initializePassport();
+app.use(Passport.initialize());
+app.use(Passport.session());
 
 app.engine("handlebars", handlebars.engine());
 app.set("views", ABSOLUTE_PATHS.viewsPath);
