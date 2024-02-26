@@ -41,7 +41,7 @@ app.set("views", ABSOLUTE_PATHS.viewsPath);
 app.set("view engine", "handlebars");
 
 app.use("", viewsRouter);
-app.use("/", authRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/chat", chatRouter);

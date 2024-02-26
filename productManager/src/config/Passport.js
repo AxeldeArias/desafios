@@ -1,9 +1,8 @@
 import passport from "passport";
-import local from "passport-local";
+import { Strategy as LocalStrategy } from "passport-local";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
 import { UsersBDManager } from "../Dao/UsersBDManager.js";
-
-const LocalStrategy = local.Strategy;
+import GithubStrategy from "passport-github2";
 
 const usersManager = new UsersBDManager();
 
@@ -18,17 +17,17 @@ export const initializePassport = () => {
       async (req, _username, password, done) => {
         const { first_name, last_name, email } = req.body;
         try {
-          let user = await usersManager.getUser({ email });
+          const user = await usersManager.getUser({ email });
           if (user) return done(null, false);
 
-          let newUser = {
+          const newUser = {
             first_name,
             last_name,
             email,
             password: createHash(password),
           };
 
-          let result = await usersManager.create(newUser);
+          const result = await usersManager.create(newUser);
 
           return done(null, result);
         } catch (error) {
@@ -61,11 +60,43 @@ export const initializePassport = () => {
     )
   );
 
+  passport.use(
+    "github",
+    new GithubStrategy(
+      {
+        clientID: "Iv1.c0587f0d5ccd60c9",
+        clientSecret: "0a6a26bcaf65d032bc72815d8f63e86138e141b7",
+        callbackURL: "http://localhost:8080/api/auth/githubcallback",
+      },
+      async (_accessToken, _refreshToken, profile, done) => {
+        try {
+          const user = await usersManager.getUser({
+            email: profile._json.email,
+          });
+          if (user) return done(null, false);
+
+          const newUser = {
+            first_name: profile._json.name,
+            last_name: profile._json.name,
+            email: profile._json.email,
+          };
+
+          console.log({ profile, newUser });
+          const result = await usersManager.create(newUser);
+          return done(null, result);
+        } catch (error) {
+          console.log({ githubError: error });
+          done(error);
+        }
+      }
+    )
+  );
+
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
   passport.deserializeUser(async (id, done) => {
-    let user = await usersManager.getUserById(id);
+    const user = await usersManager.getUserById(id);
     done(null, user);
   });
 };

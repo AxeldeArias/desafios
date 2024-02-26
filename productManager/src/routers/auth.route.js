@@ -87,4 +87,21 @@ authRouter.get("/logout", async (req, res) => {
   res.status(200).redirect("/");
 });
 
+authRouter.get(
+  "/github",
+  Passport.authenticate("github", { scope: ["user:email"] }),
+  async (req) => {
+    console.log({ github: req });
+  }
+);
+
+authRouter.get(
+  "/githubcallback",
+  Passport.authenticate("github", { failureRedirect: "/?noLogin=true" }),
+  async (req, res) => {
+    req.session.user = req.user;
+    res.redirect("/products");
+  }
+);
+
 export default authRouter;
