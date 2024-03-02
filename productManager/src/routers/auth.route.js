@@ -99,7 +99,10 @@ authRouter.get(
   "/githubcallback",
   Passport.authenticate("github", { failureRedirect: "/?noLogin=true" }),
   async (req, res) => {
-    req.session.user = req.user;
+    const userSession = await usersManager.getSession({
+      email: req.user.email,
+    });
+    req.session.user = userSession;
     res.redirect("/products");
   }
 );

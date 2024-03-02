@@ -45,6 +45,7 @@ export const initializePassport = () => {
         usernameField: "email",
       },
       async (username, password, done) => {
+        if (!username || !password) return done(null, false);
         try {
           const user = await usersManager.getUser({ email: username });
           if (!user) {
@@ -77,8 +78,8 @@ export const initializePassport = () => {
           if (user) return done(null, user);
 
           const newUser = {
-            first_name: profile._json.name,
-            last_name: profile._json.name,
+            first_name: profile._json.name ?? "Usuario",
+            last_name: profile._json.last_name ?? "",
             email: profile._json.email,
           };
 
