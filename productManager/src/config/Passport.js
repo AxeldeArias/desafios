@@ -73,7 +73,8 @@ export const initializePassport = () => {
           const user = await usersManager.getUser({
             email: profile._json.email,
           });
-          if (user) return done(null, false);
+
+          if (user) return done(null, user);
 
           const newUser = {
             first_name: profile._json.name,
@@ -81,8 +82,8 @@ export const initializePassport = () => {
             email: profile._json.email,
           };
 
-          console.log({ profile, newUser });
           const result = await usersManager.create(newUser);
+
           return done(null, result);
         } catch (error) {
           console.log({ githubError: error });
