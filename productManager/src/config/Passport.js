@@ -3,10 +3,32 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
 import { UsersBDManager } from "../Dao/UsersBDManager.js";
 import GithubStrategy from "passport-github2";
+import { cookieExtractor } from "../utils/cookieExtractor.js";
+import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import { JWT_PRIVATE_KEY } from "./jwt.js";
+import { CartsBDManager } from "../Dao/CartsBDManager.js";
 
 const usersManager = new UsersBDManager();
+const cartManager = new CartsBDManager();
 
 export const initializePassport = () => {
+  passport.use(
+    "jwt",
+    new JwtStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: JWT_PRIVATE_KEY,
+      },
+      async (jwt_payload, done) => {
+        try {
+          return done(null, jwt_payload._doc);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
   passport.use(
     "register",
     new LocalStrategy(
@@ -15,7 +37,7 @@ export const initializePassport = () => {
         usernameField: "email",
       },
       async (req, _username, password, done) => {
-        const { first_name, last_name, email } = req.body;
+        const { first_name, last_name, email, age } = req.body;
         try {
           const user = await usersManager.getUser({ email });
           if (user) return done(null, false);
@@ -24,7 +46,10 @@ export const initializePassport = () => {
             first_name,
             last_name,
             email,
+            age,
+            cartId: await cartManager.createCart({ products: [] }),
             password: createHash(password),
+            role: "user",
           };
 
           const result = await usersManager.create(newUser);
@@ -46,13 +71,22 @@ export const initializePassport = () => {
       },
       async (username, password, done) => {
         try {
-          const user = await usersManager.getUser({ email: username });
+          const user = await usersManager.getUser({
+            email: username,
+            password,
+          });
+
           if (!user) {
             return done(null, false);
           }
-          if (!isValidPassword(password, user.password))
+          if (user.password && !isValidPassword(password, user.password))
             return done(null, false);
-          return done(null, user);
+
+          const userToken = await usersManager.getUserToken({
+            email: user.email,
+          });
+
+          return done(null, userToken);
         } catch (error) {
           return done(error);
         }
@@ -70,21 +104,23 @@ export const initializePassport = () => {
       },
       async (_accessToken, _refreshToken, profile, done) => {
         try {
-          const user = await usersManager.getUser({
+          const userToken = await usersManager.getUserToken({
             email: profile._json.email,
           });
 
-          if (user) return done(null, user);
-
+          if (userToken) return done(null, userToken);
           const newUser = {
             first_name: profile._json.name,
             last_name: profile._json.name,
             email: profile._json.email,
+            age: 0,
+            role: "user",
+            cartId: await cartManager.createCart({ products: [] }),
           };
 
-          const result = await usersManager.create(newUser);
+          const createdUserToken = await usersManager.create(newUser);
 
-          return done(null, result);
+          return done(null, createdUserToken);
         } catch (error) {
           console.log({ githubError: error });
           done(error);
@@ -93,11 +129,12 @@ export const initializePassport = () => {
     )
   );
 
-  passport.serializeUser((user, done) => {
-    done(null, user._id);
-  });
-  passport.deserializeUser(async (id, done) => {
-    const user = await usersManager.getUserById(id);
-    done(null, user);
-  });
+  // esto es para la session
+  // passport.serializeUser((user, done) => {
+  //   done(null, user._id);
+  // });
+  // passport.deserializeUser(async (id, done) => {
+  //   const user = await usersManager.getUserById(id);
+  //   done(null, user);
+  // });
 };

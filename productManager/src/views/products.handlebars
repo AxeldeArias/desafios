@@ -5,20 +5,15 @@
         <h4>email: {{user.email}} </h4>
         </header>
 
+        <a type="button" href="/carts/{{user.cartId}}" value="facebook" target="_blank" class="button" id="seeButton">See my cart</a>
+        <br>
 
         <h2>Products</h2>
-       <label for="productSelect">Select a cart:</label>
 
-        <select id="selectCart" name="cart">
-            {{#each carts}}
-                <option value={{this._id}}>{{this._id}}</option>
-            {{/each}}
-        </select>
-
-        <a type="button" href="/carts/12312" value="facebook" target="_blank" class="button" id="seeButton">see cart</a>
-
+      
+       <h4>cartId: {{user.cartId}} </h4>
         {{#each products}}
-            <p><strong> Id: </strong>{{this.id}} - <strong>Product: </strong>{{this.title}} - <strong>description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}} <button class="addToCart" data-id="{{this._id}}">add to cart</button></p>
+            <p><strong> Id: </strong>{{this.id}} - <strong>Product: </strong>{{this.title}} - <strong>description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}} <button class="addToCart" data-id="{{this._id}}|{{../user.cartId}}">add to cart</button></p>
         {{/each}}
         {{#if hasPrevPage}}
             <a href="/products?pageQuery={{prevPage}}">Anterior</a>

@@ -1,3 +1,4 @@
+import { generateToken } from "../config/jwt.js";
 import { userModel } from "./models/users.model.js";
 
 export class UsersBDManager {
@@ -7,30 +8,26 @@ export class UsersBDManager {
   async getUserById(id) {
     return await userModel.findOne({ _id: id });
   }
-  async create({ first_name, last_name, email, password }) {
-    return await userModel.create({ first_name, last_name, email, password });
+  async create(user) {
+    const newUser = await userModel.create(user);
+
+    const userToken = {
+      ...newUser,
+      name: `${user.first_name} ${user.last_name}`,
+    };
+
+    return generateToken(userToken);
   }
 
-  async getSession({ email, password }) {
-    const isAdmin =
-      email === "adminCoder@coder.com" && password === "adminCod3r123";
-
-    if (isAdmin) {
-      return {
-        name: `Admin Coder`,
-        email: email,
-        role: "admin",
-      };
-    }
-
-    const user = await this.getUser({ email, password });
-
+  async getUserToken({ email }) {
+    const user = await this.getUser({ email });
     if (!user) return null;
 
-    return {
+    const userToken = {
+      ...user,
       name: `${user.first_name} ${user.last_name}`,
-      email: user.email,
-      role: "user",
     };
+
+    return generateToken(userToken);
   }
 }
