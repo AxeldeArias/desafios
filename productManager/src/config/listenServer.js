@@ -1,7 +1,7 @@
-const PORT = 8080;
+import { envConfig } from "./envConfig.js";
 
 export const listenServer = (app) => {
-  return app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`);
+  return app.listen(envConfig.port, () => {
+    console.log(`Example app listening on port ${envConfig.port}`);
   });
 };

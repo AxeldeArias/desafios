@@ -5,8 +5,8 @@ import { UsersBDManager } from "../Dao/UsersBDManager.js";
 import GithubStrategy from "passport-github2";
 import { cookieExtractor } from "../utils/cookieExtractor.js";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
-import { JWT_PRIVATE_KEY } from "./jwt.js";
 import { CartsBDManager } from "../Dao/CartsBDManager.js";
+import { envConfig } from "./envConfig.js";
 
 const usersManager = new UsersBDManager();
 const cartManager = new CartsBDManager();
@@ -17,7 +17,7 @@ export const initializePassport = () => {
     new JwtStrategy(
       {
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-        secretOrKey: JWT_PRIVATE_KEY,
+        secretOrKey: envConfig.jwt_secret_key,
       },
       async (jwt_payload, done) => {
         try {
@@ -129,7 +129,7 @@ export const initializePassport = () => {
     )
   );
 
-  // esto es para la session
+  // esto es solo si manejamos Session
   // passport.serializeUser((user, done) => {
   //   done(null, user._id);
   // });

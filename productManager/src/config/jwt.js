@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
-
-export const JWT_PRIVATE_KEY = "PALABRA_SECRETA";
+import { envConfig } from "./envConfig.js";
 
 export const generateToken = ({ _id, ...user }) =>
-  jwt.sign(user, JWT_PRIVATE_KEY, { expiresIn: "24h" });
+  jwt.sign(user, envConfig.jwt_secret_key, { expiresIn: "24h" });
 
 export const authTokenMiddleware = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -13,7 +12,7 @@ export const authTokenMiddleware = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
 
-  jwt.verify(token, JWT_PRIVATE_KEY, (error, decodeUser) => {
+  jwt.verify(token, envConfig.jwt_secret_key, (error, decodeUser) => {
     if (error)
       return res
         .status(401)
