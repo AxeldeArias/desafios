@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
-import { ChatBDManager } from "../Dao/ChatBDManager.js";
+import { ChatBDManager } from "../dao/ChatBDManager.js";
 
 const chatRouter = Router();
 

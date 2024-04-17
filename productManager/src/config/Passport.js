@@ -1,11 +1,11 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
-import { UsersBDManager } from "../Dao/UsersBDManager.js";
+import { UsersBDManager } from "../dao/UsersBDManager.js";
 import GithubStrategy from "passport-github2";
 import { cookieExtractor } from "../utils/cookieExtractor.js";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
-import { CartsBDManager } from "../Dao/CartsBDManager.js";
+import { CartsBDManager } from "../dao/CartsBDManager.js";
 import { envConfig } from "./envConfig.js";
 
 const usersManager = new UsersBDManager();

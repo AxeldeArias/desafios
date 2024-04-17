@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
-import { CartsBDManager } from "../Dao/CartsBDManager.js";
+import { ProductsBDManager } from "../dao/ProductsBDManager.js";
+import { CartsBDManager } from "../dao/CartsBDManager.js";
 import Passport from "passport";
 
 const viewsRouter = Router();

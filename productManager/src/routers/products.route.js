@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
-import { ProductsBDManager } from "../Dao/ProductsBDManager.js";
+import { ProductsBDManager } from "../dao/ProductsBDManager.js";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
 
 const productRouter = Router();

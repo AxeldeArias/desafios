@@ -1,5 +1,5 @@
 import { __dirname } from "../utils/filenameUtils.js";
-import { productsModel } from "./models/products.model.js";
+import { productsModel } from "../models/products.model.js";
 
 export class ProductsBDManager {
   nombre;
