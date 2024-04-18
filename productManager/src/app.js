@@ -3,7 +3,7 @@ import productRouter from "./routers/products.route.js";
 import cartsRouter from "./routers/carts.route.js";
 import handlebars from "express-handlebars";
 import viewsRouter from "./routers/views.route.js";
-import { connectDB, connectMongoStore } from "./config/connectDB.js";
+import { connectDB } from "./config/connectDB.js";
 import { ABSOLUTE_PATHS } from "./utils/filenameUtils.js";
 import { connectSocket } from "./config/connectSocket.js";
 import { listenServer } from "./config/listenServer.js";

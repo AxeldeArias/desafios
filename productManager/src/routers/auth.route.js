@@ -1,67 +1,21 @@
 import { Router } from "express";
-import Passport from "passport";
+import { AuthController } from "../controllers/AuthController.js";
 
 const authRouter = Router();
+const authController = new AuthController();
 
-authRouter.post(
-  "/register",
-  Passport.authenticate("register", {
-    failureRedirect: "/register?noRegistered=true",
-    successRedirect: "/?registered=true",
-    session: false,
-  })
-);
+authRouter.post("/register", authController.register);
 
-authRouter.post(
-  "/login",
-  Passport.authenticate("login", {
-    session: false,
-    failureRedirect: "/?noLogin=true",
-  }),
-  async (req, res) => {
-    const userToken = req.user;
-    if (!userToken)
-      return res
-        .status(401)
-        .send({ status: "error", message: "Usuario o contraseña incorrectos" });
+authRouter.post("/login", authController.login, authController.loginSuccess);
 
-    res
-      .cookie("cookieToken", userToken, {
-        maxAge: 60 * 60 * 1000 * 24,
-        httpOnly: true,
-      })
-      .status(200)
-      .redirect("/products");
-  }
-);
+authRouter.get("/logout", authController.logout);
 
-authRouter.get("/logout", async (req, res) => {
-  res.clearCookie("cookieToken").status(200).redirect("/");
-});
-
-authRouter.get(
-  "/github",
-  Passport.authenticate("github", { scope: ["user:email"], session: false }),
-  async (req) => {
-    console.log({ github: req });
-  }
-);
+authRouter.get("/github", authController.github);
 
 authRouter.get(
   "/githubcallback",
-  Passport.authenticate("github", {
-    failureRedirect: "/?noLogin=true",
-    session: false,
-  }),
-  async (req, res) => {
-    res
-      .cookie("cookieToken", req.user, {
-        maxAge: 60 * 60 * 1000 * 24,
-        httpOnly: true,
-      })
-      .status(200)
-      .redirect("/products");
-  }
+  authController.githubCallback,
+  authController.githubCallbackSuccess
 );
 
 export default authRouter;
