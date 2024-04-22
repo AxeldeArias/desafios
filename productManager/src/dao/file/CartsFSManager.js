@@ -1,6 +1,6 @@
 import * as fs from "node:fs/promises";
 import { ProductsFSManager } from "./ProductsFSManager.js";
-import { ABSOLUTE_PATHS } from "../utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "../../utils/filenameUtils.js";
 
 export class CartsFSManager {
   productsFSManager = new ProductsFSManager({

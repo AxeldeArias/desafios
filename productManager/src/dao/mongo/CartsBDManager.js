@@ -1,5 +1,5 @@
 import { ProductsBDManager } from "./ProductsBDManager.js";
-import { cartModel } from "../models/cart.model.js";
+import { cartModel } from "../../models/cart.model.js";
 import Mongoose from "mongoose";
 
 export class CartsBDManager {

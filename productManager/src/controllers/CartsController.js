@@ -1,11 +1,8 @@
-import { CartsBDManager } from "../dao/CartsBDManager.js";
-
+import { cartsService } from "../repositories/index.js";
 export class CartsController {
-  cartManager = new CartsBDManager();
-
   create = async (_req, res) => {
     try {
-      const cart = await this.cartManager.create({ products: [] });
+      const cart = await cartsService.create({ products: [] });
       return res.status(200).send({
         status: "success",
         data: { cartId: cart._id },
@@ -19,7 +16,7 @@ export class CartsController {
   };
 
   getAll = async (_req, res) => {
-    const result = await this.cartManager.getCarts();
+    const result = await cartsService.getCarts();
     return res.status(200).send({
       status: "success",
       data: { carts: result },
@@ -28,7 +25,7 @@ export class CartsController {
 
   getOne = async (req, res) => {
     try {
-      const cartList = await this.cartManager.getCart(req.params.cid);
+      const cartList = await cartsService.getCart(req.params.cid);
       if (!cartList) {
         return res.status(404).send({
           status: "error",
@@ -51,7 +48,7 @@ export class CartsController {
     const { quantity } = req.body;
 
     try {
-      const product = await this.cartManager.addProduct({
+      const product = await cartsService.addProduct({
         cid: req.params.cid,
         productId: req.params.pid,
         quantity: quantity ?? 1,
@@ -78,7 +75,7 @@ export class CartsController {
   updateProducts = async (req, res) => {
     try {
       const products = req.body;
-      const cartList = await this.cartManager.updateProducts({
+      const cartList = await cartsService.updateProducts({
         cid: req.params.cid,
         products,
       });
@@ -97,7 +94,7 @@ export class CartsController {
 
   deleteProduct = async (req, res) => {
     try {
-      const product = await this.cartManager.deleteProduct({
+      const product = await cartsService.deleteProduct({
         cid: req.params.cid,
         productId: req.params.pid,
       });
@@ -123,7 +120,7 @@ export class CartsController {
   updateProduct = async (req, res) => {
     try {
       const { quantity } = req.body;
-      const product = await this.cartManager.updateProduct({
+      const product = await cartsService.updateProduct({
         cid: req.params.cid,
         productId: req.params.pid,
         quantity,

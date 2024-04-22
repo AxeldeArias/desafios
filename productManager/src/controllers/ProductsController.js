@@ -1,11 +1,8 @@
-import { ProductsBDManager } from "../dao/ProductsBDManager.js";
+import { ProductsBDManager } from "../dao/mongo/ProductsBDManager.js";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
+import { productsService } from "../repositories/index.js";
 
 export class ProductsController {
-  #productsManager = new ProductsBDManager({
-    nombre: "server",
-  });
-
   getAll = async (req, res) => {
     const { limit, page, sort, query } = req.query;
     if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
@@ -24,7 +21,7 @@ export class ProductsController {
 
     const sortQuery = sort === "asc" ? { _id: 1 } : { _id: -1 };
 
-    const products = await this.#productsManager.getProducts({
+    const products = await productsService.getProducts({
       limit,
       page,
       sort,
@@ -40,9 +37,7 @@ export class ProductsController {
 
   getOne = async (req, res) => {
     try {
-      const product = await this.#productsManager.getProductById(
-        req.params.pid
-      );
+      const product = await productsService.getProductById(req.params.pid);
       res.status(200).send({ product });
     } catch (e) {
       if (e?.code === "no-exist-product") {
@@ -85,7 +80,7 @@ export class ProductsController {
     }
 
     try {
-      await this.#productsManager.addProduct({
+      await productsService.addProduct({
         code,
         description,
         price,
@@ -94,7 +89,7 @@ export class ProductsController {
         title,
       });
 
-      const products = await this.#productsManager.getProducts();
+      const products = await productsService.getProducts();
 
       emitSocketEventToAll(req, res, "products", products.docs);
 
@@ -112,12 +107,9 @@ export class ProductsController {
 
   updateOne = async (req, res) => {
     try {
-      const newProduct = await this.#productsManager.updateProduct(
-        req.params.pid,
-        {
-          ...req.body,
-        }
-      );
+      const newProduct = await productsService.updateProduct(req.params.pid, {
+        ...req.body,
+      });
       return res.status(200).send({
         status: "success",
         product: newProduct,
@@ -132,11 +124,11 @@ export class ProductsController {
 
   deleteOne = async (req, res) => {
     try {
-      await this.#productsManager.deleteProduct(req.params.pid, {
+      await productsService.deleteProduct(req.params.pid, {
         ...req.body,
       });
 
-      const products = await this.#productsManager.getProducts();
+      const products = await productsService.getProducts();
       emitSocketEventToAll(req, res, "products", products.docs);
 
       return res.status(200).send({

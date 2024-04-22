@@ -1,12 +1,6 @@
-import { CartsBDManager } from "../dao/CartsBDManager.js";
-import { ProductsBDManager } from "../dao/ProductsBDManager.js";
+import { cartsService, productsService } from "../repositories/index.js";
 
 export class ViewController {
-  #productsBDManager = new ProductsBDManager({
-    nombre: "views",
-  });
-  #cartManager = new CartsBDManager();
-
   renderLoginPage = async (req, res) => {
     const { registered, noLogin } = req.query;
     const description = noLogin
@@ -20,13 +14,18 @@ export class ViewController {
   };
 
   renderRealTimeProductsPage = async (req, res) => {
-    const products = await this.#productsBDManager.getProducts();
+    const products = await productsService.getProducts();
     res.render("realtimeproducts.handlebars", { products: products.docs });
   };
 
   renderRegisterPage = async (req, res) => {
-    const { noRegistered } = req.query;
-    const description = noRegistered ? "error al crear usuario" : "";
+    const { noRegistered, alreadyExist } = req.query;
+    const description = noRegistered
+      ? "error al crear usuario"
+      : alreadyExist
+      ? "el usuario ya existe"
+      : "";
+
     res.render("register", { description });
   };
 
@@ -36,10 +35,11 @@ export class ViewController {
 
   renderProductsPage = async (req, res) => {
     const { limit = 1, pageQuery = 1 } = req.query;
-    const products = await this.#productsBDManager.getProducts({
+    const products = await productsService.getProducts({
       limit,
       page: pageQuery,
     });
+    console.log({ products });
     res.render("products.handlebars", {
       ...products,
       products: products.docs,
@@ -48,7 +48,7 @@ export class ViewController {
   };
 
   renderCartPage = async (req, res) => {
-    const cart = await this.#cartManager.getCart(req.params.cid);
+    const cart = await cartsService.getCart(req.params.cid);
     res.render("cart.handlebars", {
       cart,
     });

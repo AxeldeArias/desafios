@@ -1,5 +1,5 @@
-import { __dirname } from "../utils/filenameUtils.js";
-import { chatModel } from "../models/chat.model.js";
+import { __dirname } from "../../utils/filenameUtils.js";
+import { chatModel } from "../../models/chat.model.js";
 
 export class ChatBDManager {
   constructor({ nombre }) {
