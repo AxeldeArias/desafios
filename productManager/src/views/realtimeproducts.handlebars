@@ -1,48 +1,50 @@
-
-<h1>Realtime Products</h1>
-
+<h1>Hi {{user.name}} your role is {{user.role}}.</h1>
 <main>
-    <form id="product-form">
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder="Title" value="oso" />
+        <form id="product-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Title" value="" />
 
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description" placeholder="Description"  value="description" />
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" placeholder="Description"  value="" />
 
-        <label for="price">Price</label>
-        <input type="number" id="price" name="price" placeholder="Price" value="200" />
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="Price" value="" />
 
-        <label for="thumbnail">Thumbnail (separated by ;)</label>
-        <textarea max="500" rows="4" type="text" id="thumbnail" name="thumbnail" placeholder="url1;url2;url3"  value="thumbnail" ></textarea>
+            <label for="thumbnail">Thumbnail (separated by ;)</label>
+            <textarea max="500" rows="4" type="text" id="thumbnail" name="thumbnail" placeholder="url1;url2;url3"  value="thumbnail" ></textarea>
 
-        <label for="code">Code</label>
-        <input type="text" id="code" name="code" placeholder="Code"  value="Code" />
+            <label for="code">Code</label>
+            <input type="text" id="code" name="code" placeholder="Code"  value="" />
 
-        <label for="stock">Stock</label>
-        <input type="number" id="stock" name="stock" placeholder="Stock"  value="2" />
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" name="stock" placeholder="Stock"  value="" />
 
-        <input type="submit" value="submit" />
-    </form>
-      <ol id="ol-products">
-        {{#each products}}
-            <li>
-                <div class="row">
-                    <ul>
-                        <li>id: {{this._id}}</li>
-                        <li>code: {{this.code}}</li>
-                        <li>title: {{this.title}}</li>
-                        <li>description: {{this.description}}</li>
-                        <li>price: {{this.price}}</li>
-                        <li>thumbnail: {{this.thumbnail}}</li>
-                        <li>stock: {{this.stock}}</li>
-                    </ul>
-                    <button class="buttons" data-id="{{this._id}}">Delete</button>
-                </div>
-            </li>
-        {{/each}}
-    </ol>
+            <input type="submit" value="submit" />
+        </form>
+        <aside id="ol-products">
+            {{#each products}}
+                <li>
+                    <div class="row">
+                        <ul>
+                            <li>id: {{this._id}}</li>
+                            <li>code: {{this.code}}</li>
+                            <li>title: {{this.title}}</li>
+                            <li>description: {{this.description}}</li>
+                            <li>price: {{this.price}}</li>
+                            <li>thumbnail: {{this.thumbnail}}</li>
+                            <li>stock: {{this.stock}}</li>
+                        </ul>
+                        <button class="buttons" data-id="{{this._id}}">Delete</button>
+                    </div>
+                </li>
+            {{/each}}
+        </aside>
+
 
 </main>
+<footer>
+    <a href="/api/auth/logout" class="button">Logout</a>
+    </footer>
 
 
 <script type="module" src="/js/addClickEventListener.js"></script>

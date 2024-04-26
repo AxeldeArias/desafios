@@ -15,7 +15,10 @@ export class ViewController {
 
   renderRealTimeProductsPage = async (req, res) => {
     const products = await productsService.getProducts();
-    res.render("realtimeproducts.handlebars", { products: products.docs });
+    res.render("realtimeproducts.handlebars", {
+      products: products.docs,
+      user: req.user,
+    });
   };
 
   renderRegisterPage = async (req, res) => {

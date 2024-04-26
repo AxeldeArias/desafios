@@ -61,7 +61,7 @@ export class AuthController {
           httpOnly: true,
         })
         .status(200)
-        .redirect("/products");
+        .redirect(user.role === "ADMIN" ? "/realtimeproducts" : "/products");
     } catch (error) {
       console.log({ error });
       return res.status(500).redirect("/?noLogin=true");

@@ -9,6 +9,7 @@ viewsRouter.get("/", viewsController.renderLoginPage);
 viewsRouter.get("/register", viewsController.renderRegisterPage);
 viewsRouter.get(
   "/chat",
+  JWTStrategy,
   authorization(["USER"]),
   viewsController.renderChatPage
 );
