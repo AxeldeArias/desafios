@@ -4,7 +4,13 @@ import { ChatController } from "../controllers/ChatController.js";
 const chatRouter = Router();
 const chatController = new ChatController();
 
-chatRouter.post("/", chatController.addMessage);
-chatRouter.get("/", chatController.getChat);
+chatRouter.post(
+  "/",
+  JWTStrategy,
+  authorization["USER"],
+  chatController.addMessage
+);
+
+chatRouter.get("/", JWTStrategy, authorization["USER"], chatController.getChat);
 
 export default chatRouter;

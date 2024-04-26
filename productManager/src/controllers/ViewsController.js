@@ -53,4 +53,12 @@ export class ViewController {
       cart,
     });
   };
+
+  current = async (req, res) => {
+    try {
+      res.send({ message: "datos sensibles" });
+    } catch (error) {
+      res.send({ status: "error", error });
+    }
+  };
 }

@@ -4,11 +4,7 @@ import { CART_COLLECTION } from "./cart.model.js";
 export const USER_COLLECTION = "users";
 
 const usersSchema = new mongoose.Schema({
-  first_name: {
-    type: String,
-    index: true,
-  },
-  last_name: String,
+  name: String,
   email: {
     type: String,
     required: true,

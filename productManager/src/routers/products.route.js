@@ -1,28 +1,31 @@
 import { Router } from "express";
 import { ProductsController } from "../controllers/ProductsController.js";
-import { JWTStrategy } from "../middlewares/auth.js";
+import { authorization, JWTStrategy } from "../middlewares/auth.js";
 
 const productRouter = Router();
 
 const productsController = new ProductsController();
 
-productRouter.get(
+productRouter.get("/", JWTStrategy, productsController.getAll);
+
+productRouter.post(
   "/",
-  JWTStrategy[("USER", "ADMIN")],
-  productsController.getAll
+  JWTStrategy,
+  authorization["ADMIN"],
+  productsController.addProduct
 );
 
-productRouter.post("/", JWTStrategy["ADMIN"], productsController.addProduct);
-
-productRouter.get(
+productRouter.get("/:pid", JWTStrategy, productsController.getOne);
+productRouter.put(
   "/:pid",
-  JWTStrategy[("USER", "ADMIN")],
-  productsController.getOne
+  JWTStrategy,
+  authorization["ADMIN"],
+  productsController.updateOne
 );
-productRouter.put("/:pid", JWTStrategy["ADMIN"], productsController.updateOne);
 productRouter.delete(
   "/:pid",
-  JWTStrategy["ADMIN"],
+  JWTStrategy,
+  authorization["ADMIN"],
   productsController.deleteOne
 );
 

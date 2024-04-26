@@ -6,11 +6,8 @@ export const TICKET_COLLECTION = "ticket";
 const ticketSchema = new mongoose.Schema({
   amount: Number,
   purchaser: String,
+  purchaser_datetime: Date,
   code: String,
-  cart2: {
-    type: Schema.Types.ObjectId,
-    ref: CART_COLLECTION,
-  },
   cart: {
     type: [
       {
