@@ -104,8 +104,7 @@ export class AuthController {
 
       if (userToken) return done(null, userToken);
       const newUser = {
-        first_name: profile._json.name,
-        last_name: profile._json.name,
+        name: profile._json.name,
         email: profile._json.email,
         age: 0,
         role: "USER",
