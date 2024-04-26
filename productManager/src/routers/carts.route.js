@@ -10,27 +10,27 @@ const cartsController = new CartsController();
 cartsRouter.post(
   "/",
   JWTStrategy,
-  authorization["ADMIN"],
+  authorization(["USER"]),
   cartsController.create
 );
 cartsRouter.get(
   "/",
   JWTStrategy,
-  authorization["ADMIN"],
+  authorization(["USER"]),
   cartsController.getAll
 );
 
 cartsRouter.get(
   "/:cid",
   JWTStrategy,
-  authorization["USER"],
+  authorization(["USER"]),
   cartPermission,
   cartsController.getOne
 );
 cartsRouter.put(
   "/:cid",
   JWTStrategy,
-  authorization["USER"],
+  authorization(["USER"]),
   cartPermission,
   cartsController.updateProducts
 );
@@ -38,7 +38,7 @@ cartsRouter.put(
 cartsRouter.post(
   "/:cid/product/:pid",
   JWTStrategy,
-  authorization["USER"],
+  authorization(["USER"]),
   cartPermission,
   cartsController.addProduct
 );
@@ -46,7 +46,7 @@ cartsRouter.post(
 cartsRouter.delete(
   "/:cid/product/:pid",
   JWTStrategy,
-  authorization["ADMIN"],
+  authorization(["USER"]),
   cartsController.updateProducts
 );
 
@@ -60,7 +60,7 @@ cartsRouter.put(
 cartsRouter.post(
   "/:cid/purchase",
   JWTStrategy,
-  authorization["USER"],
+  authorization(["USER"]),
   cartPermission,
   cartsController.purchase
 );
