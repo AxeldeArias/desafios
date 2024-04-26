@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { ViewController } from "../controllers/ViewsController.js";
 import { authorization, JWTStrategy } from "../middlewares/auth.js";
+import { SessionController } from "../controllers/SessionController.js";
 
 const viewsRouter = Router();
 const viewsController = new ViewController();
+const sessionController = new SessionController();
 
 viewsRouter.get("/", viewsController.renderLoginPage);
 viewsRouter.get("/register", viewsController.renderRegisterPage);
@@ -30,6 +32,13 @@ viewsRouter.get(
   JWTStrategy,
   authorization(["USER"]),
   viewsController.renderCartPage
+);
+
+viewsRouter.get(
+  "/current",
+  JWTStrategy,
+  authorization(["USER", "ADMIN"]),
+  sessionController.getToken
 );
 
 export default viewsRouter;

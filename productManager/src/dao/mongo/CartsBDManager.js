@@ -9,7 +9,7 @@ export class CartsBDManager {
 
   async createCart({ products }) {
     const cart = await cartModel.create({ products });
-    return cart.id;
+    return cart._id;
   }
 
   async deleteCart({ cid }) {

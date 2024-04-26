@@ -8,18 +8,16 @@ export class AuthController {
   register = async (req, res) => {
     const newUser = req.body;
     try {
-      console.log({ req });
       const user = await userService.getUser({ email: newUser.email });
       if (user) {
         return res.status(401).redirect("/register?alreadyExist=true");
       }
 
       const cartId = await cartsManager.createCart({ products: [] });
-
       await userService.create({
         ...newUser,
         cartId,
-        role: "user",
+        role: "USER",
       });
 
       return res.status(200).redirect("/?registered=true");
@@ -110,7 +108,7 @@ export class AuthController {
         last_name: profile._json.name,
         email: profile._json.email,
         age: 0,
-        role: "user",
+        role: "USER",
         cartId: await cartsManager.createCart({ products: [] }),
       };
 

@@ -1,4 +1,11 @@
-import { cartsService } from "../repositories/index.js";
+import Mongoose from "mongoose";
+
+import {
+  cartsService,
+  productsService,
+  ticketService,
+} from "../repositories/index.js";
+
 export class CartsController {
   create = async (_req, res) => {
     try {
@@ -142,5 +149,56 @@ export class CartsController {
         });
       }
     }
+  };
+
+  purchase = async (req, res) => {
+    const cartList = await cartsService.getCart(req.params.cid);
+    if (cartList.products.length === 0) {
+      return res.status(500).send({
+        status: "no products to buy",
+      });
+    }
+
+    let productsWithStock = [];
+    let productsWithoutStock = [];
+    let amount = 0;
+
+    for (const currentProduct of cartList.products) {
+      const { product, quantity } = currentProduct;
+      const { stock, price } = await productsService.getProductById(
+        product._id
+      );
+
+      if (stock - quantity > 0) {
+        amount += price * quantity;
+        productsWithStock.push(currentProduct);
+      } else {
+        productsWithoutStock.push(currentProduct);
+      }
+
+      await productsService.updateProduct(product._id, {
+        stock: stock - quantity,
+      });
+    }
+
+    if (productsWithStock.length === 0) {
+      return res.status(500).send({
+        status: "insufficient stock",
+      });
+    }
+
+    await ticketService.create({
+      purchaser: req.user.email,
+      code: new Mongoose.Types.ObjectId(),
+      purchaser_datetime: new Date(),
+      amount,
+    });
+
+    await cartsService.updateProducts({
+      cid: req.params.cid,
+      products: productsWithoutStock,
+    });
+
+    return res.status(200).redirect(`/carts/${req.user.cartId}`);
   };
 }

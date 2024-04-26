@@ -2,13 +2,11 @@ import { generateToken } from "../config/jwt.js";
 import { createHash } from "../utils/hashBcrypt.js";
 
 export class UserDto {
-  constructor(user) {
+  constructor({ name, last_name, password, ...user }) {
     return {
-      name: `${user.name}${user.last_name ? ` ${user.last_name}` : ""}`,
-      email: user.email,
-      age: user.age,
-      password: createHash(user.password),
-      role: user.role,
+      name: `${name}${last_name ? ` ${last_name}` : ""}`,
+      password: createHash(password),
+      ...user,
     };
   }
 

@@ -1,4 +1,3 @@
-import { generateToken } from "../../config/jwt.js";
 import { userModel } from "../../models/users.model.js";
 
 export class UsersBDManager {

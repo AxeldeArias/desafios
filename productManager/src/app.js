@@ -13,7 +13,6 @@ import { SECRET } from "./config/session.js";
 import authRouter from "./routers/auth.route.js";
 import Passport from "passport";
 import { initializePassport } from "./config/Passport.js";
-import sessionRouter from "./routers/session.route.js";
 
 connectDB();
 
@@ -32,8 +31,8 @@ app.set("views", ABSOLUTE_PATHS.viewsPath);
 app.set("view engine", "handlebars");
 
 app.use("", viewsRouter);
+
 app.use("/api/auth", authRouter);
-app.use("/api/session", sessionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/chat", chatRouter);
