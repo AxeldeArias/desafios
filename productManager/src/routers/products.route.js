@@ -11,7 +11,7 @@ productRouter.get("/", JWTStrategy, productsController.getAll);
 productRouter.post(
   "/",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["ADMIN"]),
   productsController.addProduct
 );
 
@@ -19,13 +19,13 @@ productRouter.get("/:pid", JWTStrategy, productsController.getOne);
 productRouter.put(
   "/:pid",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["ADMIN"]),
   productsController.updateOne
 );
 productRouter.delete(
   "/:pid",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["ADMIN"]),
   productsController.deleteOne
 );
 

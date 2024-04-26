@@ -153,7 +153,8 @@ export class CartsController {
 
   purchase = async (req, res) => {
     const cartList = await cartsService.getCart(req.params.cid);
-    if (cartList.products.length === 0) {
+    const productsToBuy = cartList.products.filter(({ product }) => !!product);
+    if (productsToBuy.length === 0) {
       return res.status(500).send({
         status: "no products to buy",
       });
@@ -163,8 +164,9 @@ export class CartsController {
     let productsWithoutStock = [];
     let amount = 0;
 
-    for (const currentProduct of cartList.products) {
+    for (const currentProduct of productsToBuy) {
       const { product, quantity } = currentProduct;
+
       const { stock, price } = await productsService.getProductById(
         product._id
       );

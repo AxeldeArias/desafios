@@ -52,8 +52,12 @@ export class ViewController {
 
   renderCartPage = async (req, res) => {
     const cart = await cartsService.getCart(req.params.cid);
+
     res.render("cart.handlebars", {
-      cart,
+      cart: {
+        ...cart,
+        products: cart.products.filter(({ product }) => !!product),
+      },
     });
   };
 
