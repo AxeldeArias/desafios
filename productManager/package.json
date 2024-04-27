@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "vitest --threads=false",
-    "dev": "node --watch ./src/app.js --mode production"
+    "dev": "node --watch ./src/app.js --mode development",
+    "prod": "node --watch ./src/app.js --mode production",
+    "tst":  "node --watch ./src/app.js --mode testing"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +33,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "1.0.0",
     "socket.io": "4.7.2",
-    "sweetalert2": "11.10.3"
+    "sweetalert2": "11.10.3",
+    "winston": "^3.13.0"
   }
 }
