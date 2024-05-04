@@ -5,9 +5,11 @@ import {
   productsService,
   ticketService,
 } from "../repositories/index.js";
+import EErrors from "../errors/ErrorsList.js";
+import CustomError from "../errors/CustomError.js";
 
 export class CartsController {
-  create = async (_req, res) => {
+  create = async (_req, res, next) => {
     try {
       const cart = await cartsService.create({ products: [] });
       return res.status(200).send({
@@ -15,10 +17,7 @@ export class CartsController {
         data: { cartId: cart._id },
       });
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
@@ -30,13 +29,14 @@ export class CartsController {
     });
   };
 
-  getOne = async (req, res) => {
+  getOne = async (req, res, next) => {
     try {
       const cartList = await cartsService.getCart(req.params.cid);
       if (!cartList) {
-        return res.status(404).send({
-          status: "error",
-          error: "carrito no encontrado",
+        CustomError.createError({
+          name: "Carts Controller - getOne",
+          code: EErrors.NO_EXIST_CART,
+          message: "NO_EXIST_CART",
         });
       }
       return res.status(200).send({
@@ -44,163 +44,174 @@ export class CartsController {
         data: cartList,
       });
     } catch (error) {
-      return res.status(error?.message ? 404 : 500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
-  addProduct = async (req, res) => {
+  addProduct = async (req, res, next) => {
     const { quantity } = req.body;
-
     try {
-      const product = await cartsService.addProduct({
-        cid: req.params.cid,
-        productId: req.params.pid,
-        quantity: quantity ?? 1,
-      });
-      return res.status(200).send({
-        status: "success",
-        data: product,
-      });
-    } catch (e) {
-      if (e.code === "no-exist-product") {
-        return res.status(409).send({
-          status: "error",
-          error: e,
+      try {
+        const product = await cartsService.addProduct({
+          cid: req.params.cid,
+          productId: req.params.pid,
+          quantity: quantity ?? 1,
         });
-      } else {
-        return res.status(500).send({
-          status: "error",
-          error: e?.message ?? "",
+
+        req.logger.debug("product added");
+        return res.status(200).send({
+          status: "success",
+          data: product,
         });
+      } catch (e) {
+        if (e.code === "no-exist-product") {
+          CustomError.createError({
+            name: "Carts Controller - add Product",
+            code: EErrors.NO_EXIST_PRODUCT,
+            message: e.description,
+          });
+        }
+        throw e;
       }
+    } catch (error) {
+      next(error);
     }
   };
 
-  updateProducts = async (req, res) => {
+  updateProducts = async (req, res, next) => {
     try {
       const products = req.body;
       const cartList = await cartsService.updateProducts({
         cid: req.params.cid,
         products,
       });
-      cartList;
       return res.status(200).send({
         status: "success",
         data: cartList,
       });
     } catch (error) {
-      return res.status(error?.message ? 404 : 500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
-  deleteProduct = async (req, res) => {
+  deleteProduct = async (req, res, next) => {
     try {
-      const product = await cartsService.deleteProduct({
-        cid: req.params.cid,
-        productId: req.params.pid,
-      });
-      return res.status(200).send({
-        status: "success",
-        data: product,
-      });
-    } catch (e) {
-      if (e.code === "no-exist-product") {
-        return res.status(409).send({
-          status: "error",
-          error: e,
+      try {
+        const product = await cartsService.deleteProduct({
+          cid: req.params.cid,
+          productId: req.params.pid,
         });
-      } else {
-        return res.status(500).send({
-          status: "error",
-          error: e?.message ?? "",
+
+        req.logger.debug("product deleted");
+        return res.status(200).send({
+          status: "success",
+          data: product,
         });
+      } catch (e) {
+        if (e.code === "no-exist-product") {
+          CustomError.createError({
+            name: "Carts Controller - deleteProduct",
+            code: EErrors.NO_EXIST_PRODUCT,
+            message: e.description,
+          });
+        }
+        throw e;
       }
+    } catch (error) {
+      next(error);
     }
   };
 
   updateProduct = async (req, res) => {
     try {
-      const { quantity } = req.body;
-      const product = await cartsService.updateProduct({
-        cid: req.params.cid,
-        productId: req.params.pid,
-        quantity,
-      });
-      return res.status(200).send({
-        status: "success",
-        data: product,
-      });
-    } catch (e) {
-      if (e.code === "no-exist-product") {
-        return res.status(409).send({
-          status: "error",
-          error: e,
+      try {
+        const { quantity } = req.body;
+        const product = await cartsService.updateProduct({
+          cid: req.params.cid,
+          productId: req.params.pid,
+          quantity,
         });
-      } else {
-        return res.status(500).send({
-          status: "error",
-          error: e?.message ?? "",
+
+        req.logger.debug("product updated");
+        return res.status(200).send({
+          status: "success",
+          data: product,
         });
+      } catch (e) {
+        if (e.code === "no-exist-product") {
+          CustomError.createError({
+            name: "Carts Controller - updateProduct",
+            code: EErrors.NO_EXIST_PRODUCT,
+            message: e.description,
+          });
+          throw e;
+        }
       }
+    } catch (error) {
+      next(error);
     }
   };
 
-  purchase = async (req, res) => {
-    const cartList = await cartsService.getCart(req.params.cid);
-    const productsToBuy = cartList.products.filter(({ product }) => !!product);
-    if (productsToBuy.length === 0) {
-      return res.status(500).send({
-        status: "no products to buy",
-      });
-    }
-
-    let productsWithStock = [];
-    let productsWithoutStock = [];
-    let amount = 0;
-
-    for (const currentProduct of productsToBuy) {
-      const { product, quantity } = currentProduct;
-
-      const { stock, price } = await productsService.getProductById(
-        product._id
+  purchase = async (req, res, next) => {
+    try {
+      const cartList = await cartsService.getCart(req.params.cid);
+      const productsToBuy = cartList.products.filter(
+        ({ product }) => !!product
       );
 
-      if (stock - quantity > 0) {
-        amount += price * quantity;
-        productsWithStock.push(currentProduct);
-      } else {
-        productsWithoutStock.push(currentProduct);
+      if (productsToBuy.length === 0) {
+        CustomError.createError({
+          name: "Carts Controller - purchase",
+          code: EErrors.INSUFFICIENT_STOCK,
+        });
       }
 
-      await productsService.updateProduct(product._id, {
-        stock: stock - quantity,
+      let productsWithStock = [];
+      let productsWithoutStock = [];
+      let amount = 0;
+
+      for (const currentProduct of productsToBuy) {
+        const { product, quantity } = currentProduct;
+
+        const { stock, price } = await productsService.getProductById(
+          product._id
+        );
+
+        if (stock - quantity > 0) {
+          amount += price * quantity;
+          productsWithStock.push(currentProduct);
+        } else {
+          productsWithoutStock.push(currentProduct);
+        }
+
+        await productsService.updateProduct(product._id, {
+          stock: stock - quantity,
+        });
+      }
+
+      if (productsWithStock.length === 0) {
+        CustomError.createError({
+          name: "Carts Controller - purchase",
+          code: EErrors.INSUFFICIENT_STOCK,
+        });
+      }
+
+      await ticketService.create({
+        purchaser: req.user.email,
+        code: new Mongoose.Types.ObjectId(),
+        purchaser_datetime: new Date(),
+        amount,
       });
-    }
 
-    if (productsWithStock.length === 0) {
-      return res.status(500).send({
-        status: "insufficient stock",
+      await cartsService.updateProducts({
+        cid: req.params.cid,
+        products: productsWithoutStock,
       });
+
+      req.logger.info("purchase done");
+      return res.status(200).redirect(`/carts/${req.user.cartId}`);
+    } catch (error) {
+      next(error);
     }
-
-    await ticketService.create({
-      purchaser: req.user.email,
-      code: new Mongoose.Types.ObjectId(),
-      purchaser_datetime: new Date(),
-      amount,
-    });
-
-    await cartsService.updateProducts({
-      cid: req.params.cid,
-      products: productsWithoutStock,
-    });
-
-    return res.status(200).redirect(`/carts/${req.user.cartId}`);
   };
 }

@@ -42,7 +42,6 @@ export class ViewController {
       limit,
       page: pageQuery,
     });
-    console.log({ products });
     res.render("products.handlebars", {
       ...products,
       products: products.docs,
@@ -67,5 +66,17 @@ export class ViewController {
     } catch (error) {
       res.send({ status: "error", error });
     }
+  };
+
+  logger = async (req, res) => {
+    req.logger.fatal("log- modo fatal");
+    req.logger.error("log- modo error");
+    req.logger.warning("log- modo warning");
+    req.logger.info("log- modo info");
+    req.logger.http("log- modo http");
+    req.logger.debug("log- modo debug");
+    req.logger.error({ esto: "es un ialkjsd" });
+
+    res.send({ message: "logs" });
   };
 }

@@ -40,4 +40,6 @@ viewsRouter.get(
   viewsController.current
 );
 
+viewsRouter.get("/logger", viewsController.logger);
+
 export default viewsRouter;

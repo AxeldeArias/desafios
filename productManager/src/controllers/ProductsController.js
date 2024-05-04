@@ -1,85 +1,100 @@
-import { ProductsBDManager } from "../dao/mongo/ProductsBDManager.js";
 import { emitSocketEventToAll } from "../utils/socketUtils.js";
 import { productsService } from "../repositories/index.js";
+import {
+  generateAddProductRequiredPropertiesError,
+  generateAddProductThumbailError,
+} from "../errors/info/ProductInfo.js";
+import EErrors from "../errors/ErrorsList.js";
+import CustomError from "../errors/CustomError.js";
 
 export class ProductsController {
   getAll = async (req, res) => {
-    const { limit, page, sort, query } = req.query;
-    if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
-      return res.status(400).send({
-        status: "bad request",
-        description: "limit inválido",
+    try {
+      const { limit, page, sort, query } = req.query;
+      if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
+        CustomError.createError({
+          name: "Products Controller - getAll",
+          code: EErrors.INVALID_PRODUCT_PARAMS,
+          cause: "invalid limit param",
+          message: "INVALID_PRODUCT_PARAMS",
+        });
+      }
+
+      if (sort && !["asc", "desc"].includes(sort)) {
+        CustomError.createError({
+          name: "Products Controller - getAll",
+          code: EErrors.INVALID_PRODUCT_PARAMS,
+          cause: "invalid sort param",
+          message: "INVALID_PRODUCT_PARAMS",
+        });
+      }
+
+      const sortQuery = sort === "asc" ? { _id: 1 } : { _id: -1 };
+
+      const products = await productsService.getProducts({
+        limit,
+        page,
+        sort,
+        query,
+        sort: sortQuery,
       });
-    }
 
-    if (sort && !["asc", "desc"].includes(sort)) {
-      return res.status(400).send({
-        status: "bad request",
-        description: "invalid sort query",
+      res.status(200).send({
+        status: "success",
+        products: products.docs,
       });
+    } catch (error) {
+      next(error);
     }
-
-    const sortQuery = sort === "asc" ? { _id: 1 } : { _id: -1 };
-
-    const products = await productsService.getProducts({
-      limit,
-      page,
-      sort,
-      query,
-      sort: sortQuery,
-    });
-
-    res.status(200).send({
-      status: "success",
-      products: products.docs,
-    });
   };
 
-  getOne = async (req, res) => {
+  getOne = async (req, res, next) => {
     try {
       const product = await productsService.getProductById(req.params.pid);
       res.status(200).send({ product });
     } catch (e) {
       if (e?.code === "no-exist-product") {
-        res.status(404).send({
-          status: "success",
-          products: e,
+        CustomError.createError({
+          name: "Products Controller - getOne",
+          code: EErrors.NO_EXIST_PRODUCT,
+          cause: e.description,
+          message: "NO_EXIST_PRODUCT",
         });
       } else {
-        res.status(500).send({
-          status: "success",
-          products: e?.message ?? "",
-        });
+        next(e);
       }
     }
   };
 
-  addProduct = async (req, res) => {
-    const { code, description, price, stock, thumbnail, title } = req.body;
-    if (
-      !req.body ||
-      !code ||
-      !description ||
-      !price ||
-      !stock ||
-      !thumbnail ||
-      !title
-    ) {
-      return res.status(400).send({
-        status: "error",
-        error:
-          "Falta alguno de estos campos obligatorios: code, description, price, stock, thumbnail, title. ",
-      });
-    }
-
-    if (typeof thumbnail !== "object" || thumbnail.length <= 0) {
-      return res.status(400).send({
-        status: "error",
-        error: "thumbnail debe ser un array de strings ",
-      });
-    }
-
+  addProduct = async (req, res, next) => {
     try {
+      const { code, description, price, stock, thumbnail, title } = req.body;
+      if (
+        !req.body ||
+        !code ||
+        !description ||
+        !price ||
+        !stock ||
+        !thumbnail ||
+        !title
+      ) {
+        CustomError.createError({
+          name: "Products Controller - addProduct",
+          code: EErrors.INVALID_PRODUCT_PARAMS,
+          cause: generateAddProductRequiredPropertiesError(),
+          message: "INVALID_PRODUCT_PARAMS",
+        });
+      }
+
+      if (typeof thumbnail !== "object" || thumbnail.length <= 0) {
+        CustomError.createError({
+          name: "Products Controller - addProduct",
+          code: EErrors.INVALID_PRODUCT_THUMBNAIL,
+          cause: generateAddProductThumbailError(),
+          message: "INVALID_PRODUCT_PARAMS",
+        });
+      }
+
       await productsService.addProduct({
         code,
         description,
@@ -93,36 +108,33 @@ export class ProductsController {
 
       emitSocketEventToAll(req, res, "products", products.docs);
 
+      req.logger.debug("product created");
       return res.status(200).send({
         status: "success",
         product: products,
       });
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
-  updateOne = async (req, res) => {
+  updateOne = async (req, res, next) => {
     try {
       const newProduct = await productsService.updateProduct(req.params.pid, {
         ...req.body,
       });
+
+      req.logger.debug("product updated");
       return res.status(200).send({
         status: "success",
         product: newProduct,
       });
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
-  deleteOne = async (req, res) => {
+  deleteOne = async (req, res, next) => {
     try {
       await productsService.deleteProduct(req.params.pid, {
         ...req.body,
@@ -131,15 +143,13 @@ export class ProductsController {
       const products = await productsService.getProducts();
       emitSocketEventToAll(req, res, "products", products.docs);
 
+      req.logger.debug("product deleted");
       return res.status(200).send({
         status: "success",
         product: products,
       });
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 }

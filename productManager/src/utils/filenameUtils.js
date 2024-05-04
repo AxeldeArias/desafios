@@ -8,4 +8,5 @@ export const ABSOLUTE_PATHS = {
   productsFiles: path.join(__dirname, "../files/products.json"),
   lastIdPath: path.join(__dirname, "../files/lastId.txt"),
   viewsPath: path.join(__dirname, "../views"),
+  errorLogs: path.join(__dirname, "../files/errors.log"),
 };

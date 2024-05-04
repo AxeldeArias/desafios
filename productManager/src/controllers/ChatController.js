@@ -10,10 +10,7 @@ export class ChatController {
       emitSocketEventToAll(req, res, "chat", chat);
       return res.status(200).send();
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 
@@ -23,10 +20,7 @@ export class ChatController {
       emitSocketEventToAll(req, res, "chat", chat);
       return res.status(200).send();
     } catch (error) {
-      return res.status(500).send({
-        status: "error",
-        error: error?.message ?? "",
-      });
+      next(error);
     }
   };
 }

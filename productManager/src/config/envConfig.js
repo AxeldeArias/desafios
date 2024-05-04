@@ -18,6 +18,8 @@ export const envConfig = {
   jwt_secret_key: process.env.JWT_SECRET_KEY,
   mode: process.env.MODE,
   mongo_url: process.env.MONGO_URL,
+  loggerConsoleLevel: process.env.LOGGER_CONSOLE_LEVEL,
+  loggerFileLevel: process.env.LOGGER_FILE_LEVEL,
 };
 
 console.log({ envConfig });

@@ -2,15 +2,41 @@ import Passport from "passport";
 import { isValidPassword } from "../utils/hashBcrypt.js";
 import { CartsBDManager } from "../dao/mongo/CartsBDManager.js";
 import { userService } from "../repositories/index.js";
+import CustomError from "../errors/CustomError.js";
+import {
+  generateLoginRequiredPropertiesError,
+  generateRegisterRequiredPropertiesError,
+} from "../errors/info/UserInfo.js";
+import EErrors from "../errors/ErrorsList.js";
 
 const cartsManager = new CartsBDManager();
 export class AuthController {
-  register = async (req, res) => {
-    const newUser = req.body;
+  register = async (req, res, next) => {
     try {
+      const newUser = req.body;
+
+      if (
+        typeof req.body.first_name !== "string" ||
+        typeof req.body.last_name !== "string" ||
+        typeof req.body.email !== "string" ||
+        typeof req.body.password !== "string" ||
+        Number.isNaN(Number(req.body.age))
+      ) {
+        CustomError.createError({
+          name: "Auth Controller - register",
+          code: EErrors.INVALID_USER_PARAMS,
+          cause: generateRegisterRequiredPropertiesError(req.body),
+          message: "INVALID_PARAMS",
+        });
+      }
+
       const user = await userService.getUser({ email: newUser.email });
       if (user) {
-        return res.status(401).redirect("/register?alreadyExist=true");
+        CustomError.createError({
+          name: "Auth Controller - register",
+          code: EErrors.USER_ALREADY_EXIST,
+          message: "USER_ALREADY_EXIST",
+        });
       }
 
       const cartId = await cartsManager.createCart({ products: [] });
@@ -20,41 +46,56 @@ export class AuthController {
         role: "USER",
       });
 
+      req.logger.info("new user created");
       return res.status(200).redirect("/?registered=true");
     } catch (error) {
-      console.log({ error });
-      return res
-        .status(500)
-        .send(error)
-        .redirect("/register?noRegistered=true");
+      next(error);
     }
   };
 
-  login = async (req, res) => {
-    const { email, password } = req.body;
-
+  login = async (req, res, next) => {
     try {
+      const { email, password } = req.body;
+
+      if (typeof email !== "string" || typeof password !== "string") {
+        CustomError.createError({
+          name: "Auth Controller - login",
+          code: EErrors.INVALID_USER_PARAMS,
+          cause: generateLoginRequiredPropertiesError(req.body),
+          message: "INVALID_PARAMS",
+        });
+      }
       const user = await userService.getUser({
         email: email,
       });
 
       if (!user) {
-        return res.status(500).redirect("/?noLogin=true");
+        return CustomError.createError({
+          name: "Auth Controller - login",
+          code: EErrors.USER_NOT_EXIST,
+          message: "user does not exist",
+        });
       }
-      if (user.password && !isValidPassword(password, user.password))
-        return res.status(500).redirect("/?noLogin=true");
+
+      if (user.password && !isValidPassword(password, user.password)) {
+        return CustomError.createError({
+          name: "Auth Controller - login",
+          code: EErrors.INVALID_USER,
+          message: "password invalid",
+        });
+      }
 
       const userToken = await userService.getUserToken(user);
 
       if (!userToken) {
-        return res.status(401).send({
-          status: "error",
-          message: "Usuario o contraseña incorrectos",
+        return CustomError.createError({
+          name: "Auth Controller - login",
+          code: EErrors.INVALID_USER,
+          message: "invalid user token",
         });
       }
 
-      console.log({ userToken });
-
+      req.logger.info("local login");
       res
         .cookie("cookieToken", userToken, {
           maxAge: 60 * 60 * 1000 * 24,
@@ -63,8 +104,7 @@ export class AuthController {
         .status(200)
         .redirect(user.role === "ADMIN" ? "/realtimeproducts" : "/products");
     } catch (error) {
-      console.log({ error });
-      return res.status(500).redirect("/?noLogin=true");
+      next(error);
     }
   };
 
@@ -87,6 +127,7 @@ export class AuthController {
   };
 
   githubCallbackSuccess = async (req, res) => {
+    req.logger.info("github login");
     res
       .cookie("cookieToken", req.user, {
         maxAge: 60 * 60 * 1000 * 24,
