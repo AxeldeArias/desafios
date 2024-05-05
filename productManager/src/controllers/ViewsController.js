@@ -68,6 +68,14 @@ export class ViewController {
     }
   };
 
+  getMockingProducts = async (req, res) => {
+    const products = [];
+    for (let index = 0; index < 100; index++) {
+      products.push(productsService.getMockingProducts());
+    }
+    res.send({ products });
+  };
+
   logger = async (req, res) => {
     req.logger.fatal("log- modo fatal");
     req.logger.error("log- modo error");

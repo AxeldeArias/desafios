@@ -6,6 +6,9 @@ const viewsRouter = Router();
 const viewsController = new ViewController();
 
 viewsRouter.get("/", viewsController.renderLoginPage);
+
+viewsRouter.get("/mockingproducts", viewsController.getMockingProducts);
+
 viewsRouter.get("/register", viewsController.renderRegisterPage);
 viewsRouter.get(
   "/chat",

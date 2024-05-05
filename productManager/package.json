@@ -8,12 +8,13 @@
     "test": "vitest --threads=false",
     "dev": "node --watch ./src/app.js --mode development",
     "prod": "node --watch ./src/app.js --mode production",
-    "tst":  "node --watch ./src/app.js --mode testing"
+    "tst": "node --watch ./src/app.js --mode testing"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "vitest": "0.34.6"
   },
   "dependencies": {

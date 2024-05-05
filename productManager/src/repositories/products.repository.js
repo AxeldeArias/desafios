@@ -13,6 +13,10 @@ export class ProductsRepository {
     return this.#dao.getProducts(query);
   }
 
+  getMockingProducts(query) {
+    return this.#dao.getMockingProducts(query);
+  }
+
   async getProductById(id) {
     return this.#dao.getProductById(id);
   }

@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { __dirname } from "../../utils/filenameUtils.js";
 import { productsModel } from "../../models/products.model.js";
 
@@ -24,6 +25,21 @@ export class ProductsBDManager {
       code,
       stock,
     });
+  }
+
+  getMockingProducts() {
+    const fish = faker.animal.fish();
+
+    return {
+      id: faker.database.mongodbObjectId(),
+      description: fish,
+      price: faker.number.int(),
+      thumbnail: [
+        faker.image.urlLoremFlickr({ category: fish.replace(/\s/g, "") }),
+      ],
+      code: faker.database.mongodbObjectId(),
+      stock: faker.number.int(),
+    };
   }
 
   async getProducts({
