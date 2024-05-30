@@ -1,0 +1,36 @@
+paths:
+  /api/auth/login:
+    post:
+      summary: Iniciar sesión en la aplicación
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Dirección de correo electrónico del usuario
+                  example: axeldearias@gmail.com
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                  example: 1234
+      responses:
+        "200":
+          description: Inicio de sesión exitoso, redirecciona a la página correspondiente
+          headers:
+            Set-Cookie:
+              description: Cookie de autenticación
+              schema:
+                type: string
+                example: cookieToken=abc123; Max-Age=86400; HttpOnly
+        "400":
+          description: Parámetros inválidos en la solicitud (p.ej., email o password inválidos)
+        "401":
+          description: Usuario no existe o contraseña inválida
+        "500":
+          description: Error interno del servidor

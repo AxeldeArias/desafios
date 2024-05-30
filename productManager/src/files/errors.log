@@ -14,3 +14,67 @@ warning: log- modo warning
 info: log- modo info
 error: [object Object]
 info: purchase done
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+info: local login
+info: local login
+error: unhandled-error
+error: {}
+info: local login
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+info: {"limit":"10","page":"1","sort":"asc","query":"laptop"}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived axeldearias@gmail.com\n          * password: nedds to be a String\n      "}
+info: local login
+info: {"sort":"desc"}
+info: local login
+info: {"limit":"10","page":"1","sort":"asc","query":"laptop"}
+error: unhandled-error
+error: {}
+info: {"limit":"10","sort":"desc"}
+info: {"limit":"10","page":"1","sort":"asc"}
+info: {"limit":"10","page":"1","sort":"asc"}
+info: {"limit":"10","page":"1","sort":"asc"}
+info: {"limit":"10","page":"1","sort":"asc","query":"{\"descrip2tion\":\"camaron mardel\"}"}
+error: unhandled-error
+error: {}
+info: {"limit":"10","page":"1","sort":"asc","query":"\"{\\\"descrip2tion\\\":\\\"camaron mardel\\\"}\""}
+error: unhandled-error
+error: {}
+info: {"limit":"10","page":"1","sort":"asc","query":"\"{\\\"descrip2tion\\\":\\\"camaron mardel\\\"}\""}
+error: unhandled-error
+error: {}
+info: {"limit":"10","page":"1","sort":"asc","query":{"descrip2tion":"camaron mardel"}}
+info: {"limit":"10","page":"1","sort":"asc","query":{"description":"camaron mardel"}}
+info: {"limit":"10","page":"1","sort":"asc","query":{"description":"camaron mardel"}}
+info: {"limit":"1","page":"2","sort":"asc"}

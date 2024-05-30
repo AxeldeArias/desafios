@@ -9,4 +9,5 @@ export const ABSOLUTE_PATHS = {
   lastIdPath: path.join(__dirname, "../files/lastId.txt"),
   viewsPath: path.join(__dirname, "../views"),
   errorLogs: path.join(__dirname, "../files/errors.log"),
+  swaggerDocs: path.join(__dirname, "../docs/**/*.yaml"),
 };

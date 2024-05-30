@@ -11,6 +11,7 @@ const EErrors = {
   NO_EXIST_CART: 6,
   INSUFFICIENT_STOCK: 7,
   EMPTY_CART: 8,
+  ERROR_CREATING_USER: 9,
 };
 
 export default EErrors;

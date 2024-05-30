@@ -8,9 +8,11 @@ import EErrors from "../errors/ErrorsList.js";
 import CustomError from "../errors/CustomError.js";
 
 export class ProductsController {
-  getAll = async (req, res) => {
+  getAll = async (req, res, next) => {
     try {
-      const { limit, page, sort, query } = req.query;
+      const { limit, page, sort } = req.query;
+      const query = req.query.query ? JSON.parse(req.query.query) : undefined;
+
       if (!!limit && (Number.isNaN(Number(limit)) || limit <= 0)) {
         CustomError.createError({
           name: "Products Controller - getAll",

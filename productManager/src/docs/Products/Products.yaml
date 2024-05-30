@@ -1,0 +1,42 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          description: Número de productos a devolver
+          required: false
+          schema:
+            type: integer
+            example: 10
+        - name: page
+          in: query
+          description: Página de resultados a devolver
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: sort
+          in: query
+          description: Criterio de ordenación de los productos (asc o desc)
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            example: asc
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+            example: '{"description":"camaron mardel"}'
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente
+        "400":
+          description: Parámetros inválidos en la consulta (p.ej., limit inválido)
+        "500":
+          description: Error interno del servidor
