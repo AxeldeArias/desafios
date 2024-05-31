@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest --threads=false",
+    "start": "node ./src/app.js",
     "dev": "node --watch ./src/app.js --mode development",
     "prod": "node --watch ./src/app.js --mode production",
     "tst": "node --watch ./src/app.js --mode testing"
