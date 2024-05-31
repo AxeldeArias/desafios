@@ -74,7 +74,7 @@ export class ProductsBDManager {
       throw new Error("No se puede cambiar el id");
     }
 
-    const productById = await productsModel.findById(id);
+    const productById = await productsModel.findById(id).lean();
 
     if (!productById) {
       throw new Error(`No existe un producto con el id ${id}`);

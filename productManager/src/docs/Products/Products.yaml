@@ -29,14 +29,190 @@ paths:
             example: asc
         - name: query
           in: query
-          required: true
+          required: false
           schema:
             type: string
             example: '{"description":"camaron mardel"}'
       responses:
         "200":
-          description: Los productos fueron obtenidos correctamente
+          description: Lista de productos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
         "400":
           description: Parámetros inválidos en la consulta (p.ej., limit inválido)
+        "401":
+          description: No autorizado
         "500":
           description: Error interno del servidor
+    post:
+      summary: Agregar un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewProduct"
+      responses:
+        "200":
+          description: Producto agregado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Parámetros inválidos en la solicitud
+        "401":
+          description: No autorizado
+        "500":
+          description: Error interno del servidor
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a obtener
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Parámetros inválidos en la solicitud
+        "401":
+          description: No autorizado
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualiza un producto existente
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a actualizar
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewProduct"
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Parámetros inválidos en la solicitud
+        "401":
+          description: No autorizado
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+    delete:
+      summary: Elimina un producto existente
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a eliminar
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  product:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+        "400":
+          description: Parámetros inválidos en la solicitud
+        "401":
+          description: No autorizado
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: array
+          items:
+            type: string
+        code:
+          type: string
+          unique: true
+        stock:
+          type: number
+    NewProduct:
+      type: object
+      required:
+        - code
+        - description
+        - price
+        - stock
+        - thumbnail
+        - title
+      properties:
+        code:
+          type: string
+          example: "ABC123"
+        description:
+          type: string
+          example: "Trucha de bariloche"
+        price:
+          type: number
+          example: 30
+        stock:
+          type: number
+          example: 100
+        thumbnail:
+          type: array
+          items:
+            type: string
+          example:
+            - "https://example.com/thumbnail.jpg"
+        title:
+          type: string
+          example: "Producto de prueba"

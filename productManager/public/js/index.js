@@ -10,7 +10,7 @@ const handleFormSubmit = (event) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
+    body: JSON.stringify({  
       title: formData.get("title"),
       description: formData.get("description"),
       price: Number(formData.get("price")),

@@ -113,7 +113,6 @@ export class ProductsController {
       req.logger.debug("product created");
       return res.status(200).send({
         status: "success",
-        product: products,
       });
     } catch (error) {
       next(error);

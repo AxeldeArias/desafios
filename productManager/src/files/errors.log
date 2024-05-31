@@ -78,3 +78,6 @@ info: {"limit":"10","page":"1","sort":"asc","query":{"descrip2tion":"camaron mar
 info: {"limit":"10","page":"1","sort":"asc","query":{"description":"camaron mardel"}}
 info: {"limit":"10","page":"1","sort":"asc","query":{"description":"camaron mardel"}}
 info: {"limit":"1","page":"2","sort":"asc"}
+error: unhandled-error
+error: {}
+info: local login
