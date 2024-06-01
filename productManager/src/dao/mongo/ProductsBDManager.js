@@ -10,7 +10,15 @@ export class ProductsBDManager {
     this.nombre = nombre;
   }
 
-  async addProduct({ title, description, price, thumbnail, code, stock } = {}) {
+  async addProduct({
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    owner,
+  } = {}) {
     const product = await productsModel.findOne({ code });
 
     if (product) {
@@ -24,6 +32,7 @@ export class ProductsBDManager {
       thumbnail,
       code,
       stock,
+      owner,
     });
   }
 

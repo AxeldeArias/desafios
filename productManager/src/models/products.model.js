@@ -7,6 +7,10 @@ const productsSchema = new mongoose.Schema({
   title: String,
   description: String,
   price: Number,
+  owner: {
+    type: String,
+    default: "admin",
+  },
   thumbnail: [String],
   code: {
     type: String,

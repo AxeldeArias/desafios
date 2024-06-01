@@ -17,6 +17,7 @@ import { initializePassport } from "./config/Passport.js";
 import { addLogger } from "./config/logger.js";
 import errorHandler from "./errors/index.js";
 import swaggerJSDoc from "swagger-jsdoc";
+import userRouter from "./routers/user.route.js";
 
 const app = express();
 const swaggerOptions = {
@@ -47,6 +48,7 @@ app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 app.use(express.static("public"));
 app.use("", viewsRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/chat", chatRouter);

@@ -44,6 +44,7 @@ export class AuthController {
         ...newUser,
         cartId,
         role: "USER",
+        isPremium: false,
       });
 
       req.logger.info("new user created");

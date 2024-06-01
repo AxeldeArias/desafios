@@ -18,4 +18,12 @@ export class UserRepository {
     const userDto = new UserDto(newUser);
     return await this.#dao.create(userDto);
   };
+
+  update = async (id, newUserAtributtes) => {
+    return await this.#dao.update(id, newUserAtributtes);
+  };
+
+  getUserById = async (id) => {
+    return this.#dao.getUserById(id);
+  };
 }

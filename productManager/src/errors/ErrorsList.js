@@ -12,6 +12,8 @@ const EErrors = {
   INSUFFICIENT_STOCK: 7,
   EMPTY_CART: 8,
   ERROR_CREATING_USER: 9,
+
+  NOT_AUTHORIZED: 10,
 };
 
 export default EErrors;

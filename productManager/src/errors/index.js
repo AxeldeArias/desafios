@@ -43,6 +43,11 @@ export default (error, req, res, next) => {
         status: "error",
         error: "insufficient stock",
       });
+    case EErrors.NOT_AUTHORIZED:
+      return res.status(401).send({
+        status: "error",
+        error: "Not authorized",
+      });
 
     default:
       req.logger.error("unhandled-error");

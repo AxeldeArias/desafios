@@ -11,7 +11,7 @@ productRouter.get("/", JWTStrategy, productsController.getAll);
 productRouter.post(
   "/",
   JWTStrategy,
-  authorization(["ADMIN"]),
+  authorization(["ADMIN", "PREMIUM"]),
   productsController.addProduct
 );
 
@@ -20,12 +20,14 @@ productRouter.put(
   "/:pid",
   JWTStrategy,
   authorization(["ADMIN"]),
+  productsController.isOwnerPremiumOrAdmin,
   productsController.updateOne
 );
 productRouter.delete(
   "/:pid",
   JWTStrategy,
-  authorization(["ADMIN"]),
+  authorization(["ADMIN", "PREMIUM"]),
+  productsController.isOwnerPremiumOrAdmin,
   productsController.deleteOne
 );
 

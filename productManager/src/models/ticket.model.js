@@ -8,17 +8,6 @@ const ticketSchema = new mongoose.Schema({
   purchaser: String,
   purchaser_datetime: Date,
   code: String,
-  cart: {
-    type: [
-      {
-        cart: {
-          type: Schema.Types.ObjectId,
-          ref: CART_COLLECTION,
-        },
-        quantity: Number,
-      },
-    ],
-  },
 });
 
 ticketSchema.pre("find", function (next) {

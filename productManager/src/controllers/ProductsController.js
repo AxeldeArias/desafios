@@ -135,8 +135,37 @@ export class ProductsController {
     }
   };
 
+  isOwnerPremiumOrAdmin = async (req, _res, next) => {
+    console.log({ req });
+    if (req.user.role === "PREMIUM") {
+      const product = await this.productsBDManager
+        .getProductById(req.params.pid)
+        .lean();
+      if (product.owner !== req.user.email) {
+        CustomError.createError({
+          name: "Dele product",
+          code: EErrors.NOT_AUTHORIZED,
+          message: "You are not the owner of this product",
+        });
+      }
+    }
+    next();
+  };
+
   deleteOne = async (req, res, next) => {
     try {
+      if (req.user.role === "PREMIUM") {
+        const product = await this.productsBDManager
+          .getProductById(req.params.pid)
+          .lean();
+        if (product.owner !== req.user.email) {
+          CustomError.createError({
+            name: "Dele product",
+            code: EErrors.NOT_AUTHORIZED,
+            message: "You are not the owner of this product",
+          });
+        }
+      }
       await productsService.deleteProduct(req.params.pid, {
         ...req.body,
       });

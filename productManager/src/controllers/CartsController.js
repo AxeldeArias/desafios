@@ -56,6 +56,7 @@ export class CartsController {
           cid: req.params.cid,
           productId: req.params.pid,
           quantity: quantity ?? 1,
+          owner: req.user.email
         });
 
         req.logger.debug("product added");

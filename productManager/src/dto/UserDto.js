@@ -5,7 +5,7 @@ export class UserDto {
   constructor({ first_name, last_name, password, ...user }) {
     return {
       name: `${first_name}${last_name ? ` ${last_name}` : ""}`,
-      password: createHash(password),
+      password: password ? createHash(password) : undefined,
       ...user,
     };
   }
