@@ -33,8 +33,9 @@
                             <li>price: {{this.price}}</li>
                             <li>thumbnail: {{this.thumbnail}}</li>
                             <li>stock: {{this.stock}}</li>
+                            <li>created by: {{this.owner}}</li>
                         </ul>
-                        <button class="buttons" data-id="{{this._id}}">Delete</button>
+                        <button class="buttons" data-id="{{this._id}}" {{#ifEquals ../user.role "PREMIUM"}}disabled{{/ifEquals}}>Delete</button>
                     </div>
                 </li>
             {{/each}}

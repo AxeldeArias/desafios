@@ -121,3 +121,29 @@ error: {}
 info: new user created
 info: local login
 info: purchase done
+info: local login
+info: local login
+info: local login
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {"message":"Missing helper: \"eq\"","name":"Error"}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+info: local login

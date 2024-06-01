@@ -44,7 +44,6 @@ export class AuthController {
         ...newUser,
         cartId,
         role: "USER",
-        isPremium: false,
       });
 
       req.logger.info("new user created");
@@ -103,7 +102,7 @@ export class AuthController {
           httpOnly: true,
         })
         .status(200)
-        .redirect(user.role === "ADMIN" ? "/realtimeproducts" : "/products");
+        .redirect(user.role === "USER" ? "/products" : "/realtimeproducts");
     } catch (error) {
       next(error);
     }

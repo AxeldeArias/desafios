@@ -34,7 +34,19 @@ const specs = swaggerJSDoc(swaggerOptions);
 connectDB();
 initializePassport();
 
-app.engine("handlebars", handlebars.engine());
+app.engine(
+  "handlebars",
+  handlebars.engine({
+    helpers: {
+      ifEquals: function (a, b, options) {
+        if (a === b) {
+          return options.fn(this);
+        }
+        return options.inverse(this);
+      },
+    },
+  })
+);
 app.set("views", ABSOLUTE_PATHS.viewsPath);
 app.set("view engine", "handlebars");
 

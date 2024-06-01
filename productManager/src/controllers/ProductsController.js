@@ -104,11 +104,17 @@ export class ProductsController {
         stock,
         thumbnail,
         title,
+        owner: req.user.email,
       });
 
       const products = await productsService.getProducts();
 
-      emitSocketEventToAll(req, res, "products", products.docs);
+      emitSocketEventToAll(
+        req,
+        res,
+        "products",
+        products.docs.map((product) => ({ ...product, role: req.user.role }))
+      );
 
       req.logger.debug("product created");
       return res.status(200).send({
@@ -138,7 +144,7 @@ export class ProductsController {
   isOwnerPremiumOrAdmin = async (req, _res, next) => {
     console.log({ req });
     if (req.user.role === "PREMIUM") {
-      const product = await this.productsBDManager
+      const product = await productsService
         .getProductById(req.params.pid)
         .lean();
       if (product.owner !== req.user.email) {
@@ -155,7 +161,7 @@ export class ProductsController {
   deleteOne = async (req, res, next) => {
     try {
       if (req.user.role === "PREMIUM") {
-        const product = await this.productsBDManager
+        const product = await productsService
           .getProductById(req.params.pid)
           .lean();
         if (product.owner !== req.user.email) {
@@ -165,12 +171,14 @@ export class ProductsController {
             message: "You are not the owner of this product",
           });
         }
+        owner: req.user.email;
       }
       await productsService.deleteProduct(req.params.pid, {
         ...req.body,
       });
 
       const products = await productsService.getProducts();
+      console.log("emit", products.docs);
       emitSocketEventToAll(req, res, "products", products.docs);
 
       req.logger.debug("product deleted");

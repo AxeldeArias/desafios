@@ -20,7 +20,7 @@ viewsRouter.get(
 viewsRouter.get(
   "/realtimeproducts",
   JWTStrategy,
-  authorization(["ADMIN"]),
+  authorization(["ADMIN", "PREMIUM"]),
   viewsController.renderRealTimeProductsPage
 );
 viewsRouter.get(
