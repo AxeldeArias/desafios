@@ -134,7 +134,7 @@ export class AuthController {
         httpOnly: true,
       })
       .status(200)
-      .redirect("/products");
+      .redirect(req.user.role === "USER" ? "/products" : "/realtimeproducts");
   };
 
   gitHubConfig = async (_accessToken, _refreshToken, profile, done) => {
