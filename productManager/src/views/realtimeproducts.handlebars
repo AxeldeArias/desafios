@@ -1,4 +1,8 @@
 <h1>Hi {{user.name}} your role is {{user.role}}.</h1>
+{{#ifEquals user.role "PREMIUM"}}
+    <a href="/products" class="button">Ir a mi carrito</a><br>
+{{/ifEquals}}
+    <a href="/api/auth/logout" class="button">Logout</a>
 <main>
         <form id="product-form">
             <label for="title">Title</label>
@@ -43,9 +47,6 @@
 
 
 </main>
-<footer>
-    <a href="/api/auth/logout" class="button">Logout</a>
-    </footer>
 
 
 <script type="module" src="/js/addClickEventListener.js"></script>

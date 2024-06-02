@@ -4,10 +4,14 @@
         <h1>Hi {{user.name}} your role is {{user.role}}.</h1>
         <h4>email: {{user.email}} </h4>
         </header>
+{{#ifEquals user.role "PREMIUM"}}
+    <a href="/realtimeproducts" class="button">Ir al administrador de productos</a><br>
+{{/ifEquals}}
 
         <a type="button" href="/carts/{{user.cartId}}"  class="button" id="seeButton">See my cart</a>
         <br>
 
+        <a href="/api/auth/logout" class="button">Logout</a><br>
         <h2>Products</h2>
 
       
@@ -25,7 +29,9 @@
         <br>
         <br>
         <br>
-        <a href="/api/auth/logout" class="button">Logout</a>
+
+
 </div>
+
 
 <script type="module" src="/js/addProductToCart.js"></script>

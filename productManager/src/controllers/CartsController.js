@@ -49,8 +49,18 @@ export class CartsController {
   };
 
   addProduct = async (req, res, next) => {
-    const { quantity } = req.body;
     try {
+      const { quantity } = req.body;
+      if (req.user.role === "PREMIUM") {
+        const { owner } = await productsService.getProductById(req.params.pid);
+        if (owner === req.user.email) {
+          CustomError.createError({
+            name: "Add product to cart",
+            code: EErrors.NOT_AUTHORIZED,
+            message: "You can not add your own product",
+          });
+        }
+      }
       try {
         const product = await cartsService.addProduct({
           cid: req.params.cid,

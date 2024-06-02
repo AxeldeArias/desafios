@@ -26,13 +26,13 @@ viewsRouter.get(
 viewsRouter.get(
   "/products",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["USER", "PREMIUM"]),
   viewsController.renderProductsPage
 );
 viewsRouter.get(
   "/carts/:cid",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["USER", "PREMIUM"]),
   viewsController.renderCartPage
 );
 

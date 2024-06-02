@@ -38,7 +38,7 @@ cartsRouter.put(
 cartsRouter.post(
   "/:cid/product/:pid",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["USER", "PREMIUM"]),
   cartPermission,
   cartsController.addProduct
 );
