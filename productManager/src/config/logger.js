@@ -1,7 +1,7 @@
 import winston from "winston";
 import { getLoggerConfig } from "../utils/loggerUtils.js";
 
-const logger = winston.createLogger(getLoggerConfig());
+export const logger = winston.createLogger(getLoggerConfig());
 
 export const addLogger = (req, _res, next) => {
   req.logger = logger;

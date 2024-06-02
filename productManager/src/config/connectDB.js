@@ -1,13 +1,14 @@
 import Mongoose from "mongoose";
 import ConnectMongo from "connect-mongo";
 import { envConfig } from "./envConfig.js";
+import { logger } from "./logger.js";
 
 export const connectDB = async () => {
   try {
     await Mongoose.connect(envConfig.mongo_url);
-    console.log("base de datos conectada");
+    logger.info("base de datos conectada");
   } catch (error) {
-    console.log("error al conectar", error);
+    logger.info("error al conectar", error);
   }
 };
 

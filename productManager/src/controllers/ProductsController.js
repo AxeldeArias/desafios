@@ -142,7 +142,6 @@ export class ProductsController {
   };
 
   isOwnerPremiumOrAdmin = async (req, _res, next) => {
-    console.log({ req });
     if (req.user.role === "PREMIUM") {
       const product = await productsService
         .getProductById(req.params.pid)
@@ -178,7 +177,6 @@ export class ProductsController {
       });
 
       const products = await productsService.getProducts();
-      console.log("emit", products.docs);
       emitSocketEventToAll(req, res, "products", products.docs);
 
       req.logger.debug("product deleted");

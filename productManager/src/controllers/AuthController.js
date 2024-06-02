@@ -156,7 +156,6 @@ export class AuthController {
 
       return done(null, newUserToken);
     } catch (error) {
-      console.log({ githubError: error });
       done(error);
     }
   };

@@ -5,7 +5,7 @@
         <h4>email: {{user.email}} </h4>
         </header>
 {{#ifEquals user.role "PREMIUM"}}
-    <a href="/realtimeproducts" class="button">Ir al administrador de productos</a><br>
+    <a href="/realtimeproducts" class="button">Manage products</a><br>
 {{/ifEquals}}
 
         <a type="button" href="/carts/{{user.cartId}}"  class="button" id="seeButton">See my cart</a>
