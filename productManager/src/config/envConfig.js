@@ -20,6 +20,9 @@ export const envConfig = {
   mongo_url: process.env.MONGO_URL,
   loggerConsoleLevel: process.env.LOGGER_CONSOLE_LEVEL,
   loggerFileLevel: process.env.LOGGER_FILE_LEVEL,
+  gmailUserApp: process.env.GMAIL_USER_APP,
+  gmailUserPassword: process.env.GMAIL_USER_PASSWORD,
+  baseUrl: process.env.BASE_URL,
 };
 
 console.log({ envConfig });

@@ -43,6 +43,8 @@ viewsRouter.get(
   viewsController.current
 );
 
+viewsRouter.get("/forget-password", viewsController.renderForgetPassword);
+
 viewsRouter.get("/logger", viewsController.logger);
 
 export default viewsRouter;

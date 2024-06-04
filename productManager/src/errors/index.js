@@ -49,6 +49,29 @@ export default (error, req, res, next) => {
         error: "Not authorized",
       });
 
+    case EErrors.PASSWORDS_DOES_NOT_MATCH:
+      return res.status(400).send({
+        status: "error",
+        error: "Las contraseñas no coinciden",
+      });
+
+    case EErrors.TOKEN_EXPIRED:
+      return res.status(400).send({
+        status: "error",
+        error: "Token expirado",
+      });
+
+    case EErrors.PASSWORD_ALREADY_USED:
+      return res.status(400).send({
+        status: "error",
+        error: "No puedes usar una contraseña anterior.",
+      });
+    case EErrors.CANNOT_UPDATE_USER:
+      return res.status(400).send({
+        status: "error",
+        error: "No se pudo actualizar al usuario.",
+      });
+
     default:
       req.logger.error("unhandled-error");
       try {

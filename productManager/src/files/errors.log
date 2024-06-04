@@ -188,3 +188,501 @@ info: base de datos conectada
 info: cliente conectado
 info: github login
 info: cliente conectado
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: null
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-6c4d3a52b65sm3725071a12.87 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f6323dd9dcsm52544665ad.126 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f63232e11csm52763295ad.34 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f6358079bdsm51009355ad.263 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-6ca78965b66sm1592731a12.51 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-2c1a77afb24sm7210669a91.46 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f6323dda63sm52673485ad.148 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f6323f81b2sm54304865ad.223 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-70242aec951sm4728758b3a.103 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-70242b2e143sm4495019b3a.198 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f632379312sm53562245ad.104 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-702423dc0ebsm4492515b3a.68 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7024772455esm4328005b3a.175 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-1f6324250e4sm70359395ad.308 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+error: unhandled-error
+error: {"code":"EAUTH","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-70242b053efsm6258105b3a.146 - gsmtp","responseCode":535,"command":"AUTH PLAIN"}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {"name":"Auth Controller - resetPassword","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$yvhFLsvtkFYWGvSNR7basemzD8RwfuY1PYM4vHxcHrIklhN78Lwr.',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {}
+info: Example app listening on port 8080
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: local login
+info: cliente conectado
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$6u3/xbX6S8SMUkE.NcECJOOFsGwjAIyTOJ9lKxq9dXKAeVMu/P2L2',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$6u3/xbX6S8SMUkE.NcECJOOFsGwjAIyTOJ9lKxq9dXKAeVMu/P2L2',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: Example app listening on port 8080
+info: base de datos conectada
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$6u3/xbX6S8SMUkE.NcECJOOFsGwjAIyTOJ9lKxq9dXKAeVMu/P2L2',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: {
+  _id: new ObjectId('665a5e9ebe6ec98f135a8979'),
+  name: 'axel de Arias',
+  email: 'axeldearias@gmail.com',
+  password: '$2b$10$6u3/xbX6S8SMUkE.NcECJOOFsGwjAIyTOJ9lKxq9dXKAeVMu/P2L2',
+  age: 27,
+  role: 'ADMIN',
+  cartId: new ObjectId('665a5e9dbe6ec98f135a8977'),
+  __v: 0
+}
+info: local login
+info: cliente conectado
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: Example app listening on port 8080
+info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada

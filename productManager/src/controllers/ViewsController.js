@@ -60,6 +60,10 @@ export class ViewController {
     });
   };
 
+  renderForgetPassword = async (req, res) => {
+    res.render("forgetPassword.handlebars");
+  };
+
   current = async (req, res) => {
     try {
       res.send({ message: "datos sensibles" });
