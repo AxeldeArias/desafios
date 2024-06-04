@@ -278,10 +278,7 @@ export class AuthController {
         });
       }
 
-      res.status(200).send({
-        status: "success",
-        message: "Contraseña actualizada correctamente",
-      });
+      res.status(200).redirect("/?resetPass=true");
     } catch (error) {
       console.log({ error });
       next(error);

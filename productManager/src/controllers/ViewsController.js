@@ -2,11 +2,13 @@ import { cartsService, productsService } from "../repositories/index.js";
 
 export class ViewController {
   renderLoginPage = async (req, res) => {
-    const { registered, noLogin } = req.query;
+    const { registered, noLogin, resetPass } = req.query;
     const description = noLogin
       ? "error al ingresar"
       : registered
       ? "usuario registrado correctamente"
+      : resetPass
+      ? "tu contraseña fue reseteada con exito"
       : "";
     res.render("login", {
       description,
