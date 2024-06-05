@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
 import { beforeEach } from "vitest";
 import * as fs from "node:fs/promises";
-import { ABSOLUTE_PATHS } from "../src/utils/filenameUtils.js";
+import { ABSOLUTE_PATHS } from "../../src/utils/filenameUtils.js";
 import { atunProduct, sojaProduct } from "./constants-test";
-import { CartsFSManager } from "../src/dao/file/CartsFSManager.js";
-import { ProductsFSManager } from "../src/dao/file/ProductsFSManager.js";
+import { CartsFSManager } from "../../src/dao/file/CartsFSManager.js";
+import { ProductsFSManager } from "../../src/dao/file/ProductsFSManager.js";
 
 beforeEach(async () => {
   try {

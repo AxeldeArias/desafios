@@ -6,8 +6,8 @@ import {
   sojaProduct,
   sojaProductDuplicated,
 } from "./constants-test";
-import { ABSOLUTE_PATHS } from "../src/utils/filenameUtils.js";
-import { ProductsFSManager } from "../src/dao/file/ProductsFSManager.js";
+import { ABSOLUTE_PATHS } from "../../src/utils/filenameUtils.js";
+import { ProductsFSManager } from "../../src/dao/file/ProductsFSManager.js";
 
 beforeEach(async () => {
   try {

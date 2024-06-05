@@ -700,3 +700,32 @@ info: Example app listening on port 8080
 info: base de datos conectada
 info: Example app listening on port 8080
 info: base de datos conectada
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+info: Example app listening on port 8080
+info: base de datos conectada
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+error: unhandled-error
+error: {"name":"Auth Controller - login","code":4,"cause":"One or more properties where incomplete or not valid.\n      List of require properties: \n          * examil: nedds to be a String, recived undefined\n          * password: nedds to be a String\n      "}
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+info: local login
+info: Example app listening on port 8080
+info: base de datos conectada
