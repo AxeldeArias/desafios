@@ -132,7 +132,7 @@ export class CartsController {
     }
   };
 
-  updateProduct = async (req, res) => {
+  updateProduct = async (req, res, next) => {
     try {
       try {
         const { quantity } = req.body;
@@ -149,12 +149,11 @@ export class CartsController {
         });
       } catch (e) {
         if (e.code === "no-exist-product") {
-          CustomError.createError({
+          throw CustomError.createError({
             name: "Carts Controller - updateProduct",
             code: EErrors.NO_EXIST_PRODUCT,
             message: e.description,
           });
-          throw e;
         }
       }
     } catch (error) {
@@ -173,6 +172,8 @@ export class CartsController {
         CustomError.createError({
           name: "Carts Controller - purchase",
           code: EErrors.INSUFFICIENT_STOCK,
+          message:
+            "The products you want to purchase do not exist. They have been deleted.p",
         });
       }
 
@@ -194,21 +195,23 @@ export class CartsController {
           productsWithoutStock.push(currentProduct);
         }
 
-        await productsService.updateProduct(product._id, {
-          stock: stock - quantity,
-        });
+        if (stock - quantity >= 0) {
+          await productsService.updateProduct(product._id, {
+            stock: stock - quantity,
+          });
+        }
       }
 
       if (productsWithStock.length === 0) {
         CustomError.createError({
           name: "Carts Controller - purchase",
           code: EErrors.INSUFFICIENT_STOCK,
-          message: `Ningun producto tiene sufiente stock. Productos sin stock: ${productsWithoutStock.map(
+          message: `Insufficient stock for some products. Products without sufficient stock: ${productsWithoutStock.map(
             ({ product }, index, array) =>
               `${product.description} ${
                 index === array.length - 1 ? "." : ", "
               }`
-          )}`,
+          )} Please remove these products.`,
         });
       }
 
@@ -224,7 +227,6 @@ export class CartsController {
         products: productsWithoutStock,
       });
 
-      console.log(ticket);
       req.logger.info("purchase done");
       return res.status(200).send({ ticket });
     } catch (error) {

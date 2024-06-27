@@ -1,10 +1,7 @@
-import CustomError from "./CustomError.js";
 import EErrors from "./ErrorsList.js";
 
-export default (error, req, res) => {
-  req.logger.error(error?.message ?? "");
-
-  switch (error.code) {
+export const errorMiddleware = (err, req, res, next) => {
+  switch (err.code) {
     case EErrors.USER_ALREADY_EXIST:
       return res.status(401).redirect("/register?alreadyExist=true");
     case EErrors.ERROR_CREATING_USER:
@@ -37,8 +34,7 @@ export default (error, req, res) => {
       });
 
     case EErrors.INSUFFICIENT_STOCK:
-      console.log({ error1: error });
-      return res.json({ status500, error: error });
+      return res.status(500).json({ error: err.message });
     case EErrors.NOT_AUTHORIZED:
       return res.status(401).send({
         status: "error",

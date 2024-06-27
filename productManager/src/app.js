@@ -15,9 +15,9 @@ import authRouter from "./routers/auth.route.js";
 import Passport from "passport";
 import { initializePassport } from "./config/Passport.js";
 import { addLogger } from "./config/logger.js";
-import errorHandler from "./errors/index.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import userRouter from "./routers/user.route.js";
+import { errorMiddleware } from "./errors/index.js";
 
 const app = express();
 const swaggerOptions = {
@@ -64,7 +64,7 @@ app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/chat", chatRouter);
-app.use(errorHandler);
+app.use(errorMiddleware);
 
 const httpServer = listenServer(app);
 connectSocket(app, httpServer);

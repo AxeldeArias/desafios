@@ -10,19 +10,16 @@ export function editFormListener() {
       method: "POST",
     })
       .then(async (res) => {
-        const response = await res.json();
+        const body = await res.json();
         if (!res.ok) {
-          console.log(res);
-          return alert("error al comprar carrito1");
+          return alert(body.error ?? "error al comprar carrito");
         }
-        console.log({ response });
-        alert(`carrito comprado - ticket #${response.ticket._id}`);
+        alert(`Cart purchased - Ticket #${body.ticket._id}`);
         window.location.href = `/products`;
         // Procesar la respuesta si es necesario
       })
       .catch((error) => {
-        console.log({ error: error });
-        alert("error al comprar carrito2");
+        alert("error al comprar carrito");
         // Manejar el error apropiadamente
       });
   });
