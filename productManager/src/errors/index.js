@@ -1,7 +1,7 @@
 import EErrors from "./ErrorsList.js";
 
-export const errorMiddleware = (err, req, res, next) => {
-  switch (err.code) {
+export const errorMiddleware = (error, req, res, next) => {
+  switch (error.code) {
     case EErrors.USER_ALREADY_EXIST:
       return res.status(401).redirect("/register?alreadyExist=true");
     case EErrors.ERROR_CREATING_USER:
@@ -34,7 +34,7 @@ export const errorMiddleware = (err, req, res, next) => {
       });
 
     case EErrors.INSUFFICIENT_STOCK:
-      return res.status(500).json({ error: err.message });
+      return res.status(500).json({ error: error.message });
     case EErrors.NOT_AUTHORIZED:
       return res.status(401).send({
         status: "error",
@@ -72,6 +72,6 @@ export const errorMiddleware = (err, req, res, next) => {
         //
       }
 
-      res.send({ status: "error", error });
+      res.send({ status: "error", err: error });
   }
 };

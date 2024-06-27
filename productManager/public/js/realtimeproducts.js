@@ -21,8 +21,7 @@ socket.on("products", (products) => {
       } class="deleteButton" data-id="${product._id}">Delete</button>
       <button ${
         product.role === "PREMIUM" ? "disabled" : ""
-      } class="
-      " data-id="${product._id}">Edit</button>
+      } class="editButton" data-id="${product._id}">Edit</button>
       </div></li>`
   );
 

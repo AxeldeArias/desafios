@@ -17,9 +17,7 @@ export function addEditEventListener() {
   document.querySelectorAll(".editButton").forEach((button) => {
     const handleClick = (event) => {
       const _id = event.target.getAttribute("data-id");
-
       window.location.href = `/editProduct/${_id}`;
-      button.removeEventListener("click", handleClick);
     };
 
     button.addEventListener("click", handleClick);
