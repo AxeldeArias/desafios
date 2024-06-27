@@ -203,10 +203,16 @@ export class CartsController {
         CustomError.createError({
           name: "Carts Controller - purchase",
           code: EErrors.INSUFFICIENT_STOCK,
+          message: `Ningun producto tiene sufiente stock. Productos sin stock: ${productsWithoutStock.map(
+            ({ product }, index, array) =>
+              `${product.description} ${
+                index === array.length - 1 ? "." : ", "
+              }`
+          )}`,
         });
       }
 
-      await ticketService.create({
+      const ticket = await ticketService.create({
         purchaser: req.user.email,
         code: new Mongoose.Types.ObjectId(),
         purchaser_datetime: new Date(),
@@ -218,8 +224,9 @@ export class CartsController {
         products: productsWithoutStock,
       });
 
+      console.log(ticket);
       req.logger.info("purchase done");
-      return res.status(200).redirect(`/carts/${req.user.cartId}`);
+      return res.status(200).send({ ticket });
     } catch (error) {
       next(error);
     }

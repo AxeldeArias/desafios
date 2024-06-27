@@ -17,7 +17,7 @@
       
        <h4>cartId: {{user.cartId}} </h4>
         {{#each products}}
-            <p><strong> Id: </strong>{{this.id}} - <strong>Product: </strong>{{this.title}} - <strong>description: </strong>{{this.description}} - <strong>Price: </strong>{{this.price}} <button class="addToCart" data-id="{{this._id}}|{{../user.cartId}}">add to cart</button></p>
+            <p><strong> Id: </strong>{{this.id}} - <br><strong>Product: </strong>{{this.title}} - <br><strong>description: </strong>{{this.description}} - <br><strong>Price: </strong>{{this.price}} <br><strong>Stock: </strong>{{this.stock}} <br>  <button class="addToCart" data-id="{{this._id}}|{{../user.cartId}}">add to cart</button></p><br>
         {{/each}}
         {{#if hasPrevPage}}
             <a href="/products?pageQuery={{prevPage}}">Anterior</a>

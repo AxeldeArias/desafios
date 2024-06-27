@@ -1,7 +1,6 @@
 import { ProductsBDManager } from "./ProductsBDManager.js";
 import { cartModel } from "../../models/cart.model.js";
 import Mongoose from "mongoose";
-
 export class CartsBDManager {
   productsBDManager = new ProductsBDManager({
     nombre: "Admin",
@@ -90,18 +89,19 @@ export class CartsBDManager {
     if (productId === undefined) throw new Error("productId es requerido");
 
     const cart = await cartModel.findById(cid);
+    cart;
     if (!cart) {
       throw Error("No existe el carrito, tenés que crearlo primero");
     }
 
     try {
-      return await cartModel.findOneAndUpdate(
-        {
-          _id: cid,
-        },
-        { $pull: { products: { product: productId } } },
+      const result = await cartModel.updateMany(
+        { _id: cid },
+        { $pull: { products: { _id: productId } } },
         { new: true }
       );
+
+      return result;
     } catch (error) {
       throw error;
     }

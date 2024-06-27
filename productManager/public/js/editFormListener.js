@@ -30,7 +30,7 @@ export function editFormListener() {
     })
       .then((response) => {
         if (!response.ok) {
-          alert("error al actualizar");
+          return alert("error al actualizar");
         }
         alert("producto actualizado");
         // Procesar la respuesta si es necesario

@@ -1,10 +1,8 @@
 import CustomError from "./CustomError.js";
 import EErrors from "./ErrorsList.js";
 
-export default (error, req, res, next) => {
-  if (error instanceof CustomError) {
-    req.logger.error(JSON.stringify(error));
-  }
+export default (error, req, res) => {
+  req.logger.error(error?.message ?? "");
 
   switch (error.code) {
     case EErrors.USER_ALREADY_EXIST:
@@ -39,10 +37,8 @@ export default (error, req, res, next) => {
       });
 
     case EErrors.INSUFFICIENT_STOCK:
-      return res.status(500).send({
-        status: "error",
-        error: "insufficient stock",
-      });
+      console.log({ error1: error });
+      return res.json({ status500, error: error });
     case EErrors.NOT_AUTHORIZED:
       return res.status(401).send({
         status: "error",

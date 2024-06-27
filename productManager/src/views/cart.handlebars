@@ -3,10 +3,10 @@
         <h1>Cart {{cart._id}}</h1>
         
          {{#each cart.products}}
-            <p><strong> Id: </strong>{{this._id}} - <strong>Product: </strong>{{this.product.title}} - <strong>description: </strong>{{this.product.description}} - <strong>quantity: </strong>{{this.quantity}} </p>
+            <p><strong> Id: </strong>{{this._id}} - <strong>Product: </strong>{{this.product.title}} - <strong>description: </strong>{{this.product.description}} - <strong>quantity: </strong>{{this.quantity}}  <strong>stock: </strong>{{this.product.stock}}     <button id="removeButton" data-pid={{this._id}}  data-cid={{../cart._id}}>Remove</button></p>
         {{/each}}
 
-        <form action="/api/carts/{{cart._id}}/purchase" method="post" class="form-group w-50">       
+        <form id="ticket-form" data-id={{cart._id}} class="form-group w-50">       
            
             <input class="btn btn-outline-dark mt-3 w-100" type="submit" value="Comprar carrito">
         </form>
@@ -14,3 +14,5 @@
 
     </center>
 </div>
+
+<script  type="module" src="/js/ticket.js"></script>

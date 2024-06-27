@@ -18,11 +18,16 @@ const cartSchema = new mongoose.Schema({
 });
 
 cartSchema.pre("find", function (next) {
-  this.populate("products.product");
+  if (!this._update) {
+    this.populate("products.product");
+  }
   next();
 });
 cartSchema.pre("findById", function (next) {
-  this.populate("products.product");
+  if (!this._update) {
+    this.populate("products.product");
+  }
+
   next();
 });
 

@@ -39,7 +39,7 @@ export class ViewController {
   };
 
   renderProductsPage = async (req, res) => {
-    const { limit = 1, pageQuery = 1 } = req.query;
+    const { limit = 3, pageQuery = 1 } = req.query;
     const products = await productsService.getProducts({
       limit,
       page: pageQuery,
@@ -76,7 +76,7 @@ export class ViewController {
 
   renderCartPage = async (req, res) => {
     const cart = await cartsService.getCart(req.params.cid);
-
+    console.log({ cart });
     res.render("cart.handlebars", {
       cart: {
         ...cart,

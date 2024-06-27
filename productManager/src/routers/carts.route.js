@@ -47,7 +47,7 @@ cartsRouter.delete(
   "/:cid/product/:pid",
   JWTStrategy,
   authorization(["USER"]),
-  cartsController.updateProducts
+  cartsController.deleteProduct
 );
 
 cartsRouter.put(
@@ -60,7 +60,7 @@ cartsRouter.put(
 cartsRouter.post(
   "/:cid/purchase",
   JWTStrategy,
-  authorization(["USER"]),
+  authorization(["USER", "PREMIUM"]),
   cartPermission,
   cartsController.purchase
 );
