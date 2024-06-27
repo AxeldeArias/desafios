@@ -39,7 +39,8 @@
                             <li>stock: {{this.stock}}</li>
                             <li>created by: {{this.owner}}</li>
                         </ul>
-                        <button class="buttons" data-id="{{this._id}}" {{#ifEquals ../user.role "PREMIUM"}}disabled{{/ifEquals}}>Delete</button>
+                        <button class="deleteButton" data-id="{{this._id}}" {{#ifEquals ../user.role "PREMIUM"}}disabled{{/ifEquals}}>Delete</button>
+                        <button class="editButton" data-id="{{this._id}}" {{#ifEquals ../user.role "PREMIUM"}}disabled{{/ifEquals}}>Edit</button>
                     </div>
                 </li>
             {{/each}}
@@ -51,5 +52,4 @@
 
 <script type="module" src="/js/addClickEventListener.js"></script>
 <script type="module" src="/socket.io/socket.io.js"></script>
-<script  type="module" src="/js/index.js"></script>
 <script  type="module" src="/js/realtimeproducts.js"></script>

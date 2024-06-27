@@ -204,7 +204,6 @@ export class AuthController {
       res;
       res.status(200).render("emailSent");
     } catch (error) {
-      console.log({ error });
       next(error);
     }
   };
@@ -280,7 +279,6 @@ export class AuthController {
 
       res.status(200).redirect("/?resetPass=true");
     } catch (error) {
-      console.log({ error });
       next(error);
     }
   };

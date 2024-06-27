@@ -51,6 +51,29 @@ export class ViewController {
     });
   };
 
+  editProduct = async (req, res, next) => {
+    try {
+      const id = req.params.pid;
+      const product = await productsService.getProductById(id);
+
+      res.render("editProduct.handlebars", {
+        user: req.user,
+        product: {
+          _id: product.id,
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          owner: product.owner,
+          thumbnail: product.thumbnail.join(";"),
+          code: product.code,
+          stock: product.stock,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   renderCartPage = async (req, res) => {
     const cart = await cartsService.getCart(req.params.cid);
 

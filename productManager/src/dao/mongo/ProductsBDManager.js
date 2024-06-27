@@ -84,7 +84,6 @@ export class ProductsBDManager {
     }
 
     const productById = await productsModel.findById(id).lean();
-
     if (!productById) {
       throw new Error(`No existe un producto con el id ${id}`);
     }

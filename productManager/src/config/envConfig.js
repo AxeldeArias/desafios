@@ -24,5 +24,3 @@ export const envConfig = {
   gmailUserPassword: process.env.GMAIL_USER_PASSWORD,
   baseUrl: process.env.BASE_URL,
 };
-
-console.log({ envConfig });

@@ -5,6 +5,6 @@ export function emitSocketEventToAll(req, res, eventName, data) {
       socket.emit(eventName, data);
     }
   } catch (e) {
-    console.log(e);
+    //
   }
 }

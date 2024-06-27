@@ -29,6 +29,13 @@ viewsRouter.get(
   authorization(["USER", "PREMIUM"]),
   viewsController.renderProductsPage
 );
+
+viewsRouter.get(
+  "/editProduct/:pid",
+  JWTStrategy,
+  authorization(["ADMIN", "PREMIUM"]),
+  viewsController.editProduct
+);
 viewsRouter.get(
   "/carts/:cid",
   JWTStrategy,

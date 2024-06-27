@@ -1,0 +1,45 @@
+<h1>Edit product</h1>
+{{#ifEquals user.role "PREMIUM"}}
+    <a href="/products" class="button">Add products to my cart</a><br>
+{{/ifEquals}}
+{{#ifEquals user.role "PREMIUM"}}
+<a href="/realtimeproducts" class="button">See Products</a><br>
+{{/ifEquals}}
+
+{{#ifEquals user.role "ADMIN"}}
+<a href="/realtimeproducts" class="button">See Products</a><br>
+{{/ifEquals}}
+
+<a href="/api/auth/logout" class="button">Logout</a>
+
+    
+<main>
+        <form id="edit-product-form">
+            <div style="display:none;">
+              <input type="text" id="id" name="id" placeholder="id" value={{product._id}} />
+            </div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Title" value={{product.title}} />
+
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" placeholder="Description"  value={{product.description}} />
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="Price" value={{product.price}} />
+
+            <label for="thumbnail">Thumbnail (separated by ;)</label>
+            <textarea max="500" rows="4" type="text" id="thumbnail" name="thumbnail" placeholder="url1;url2;url3" >{{product.thumbnail}}</textarea>
+
+            <label for="code">Code</label>
+            <input type="text" id="code" name="code" placeholder="Code"  value={{product.code}} />
+
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" name="stock" placeholder="Stock"  value={{product.stock}} />
+
+            <input type="submit" value="submit" />
+        </form>
+
+</main>
+
+
+<script type="module" src="/js/editFormListener.js"></script>

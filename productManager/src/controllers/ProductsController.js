@@ -127,11 +127,11 @@ export class ProductsController {
 
   updateOne = async (req, res, next) => {
     try {
+      req.logger.debug("updating product");
       const newProduct = await productsService.updateProduct(req.params.pid, {
         ...req.body,
       });
-
-      req.logger.debug("product updated");
+      req.logger.debug("updated product");
       return res.status(200).send({
         status: "success",
         product: newProduct,
@@ -142,19 +142,23 @@ export class ProductsController {
   };
 
   isOwnerPremiumOrAdmin = async (req, _res, next) => {
-    if (req.user.role === "PREMIUM") {
-      const product = await productsService
-        .getProductById(req.params.pid)
-        .lean();
-      if (product.owner !== req.user.email) {
-        CustomError.createError({
-          name: "Dele product",
-          code: EErrors.NOT_AUTHORIZED,
-          message: "You are not the owner of this product",
-        });
+    try {
+      if (req.user.role === "PREMIUM") {
+        const product = await productsService
+          .getProductById(req.params.pid)
+          .lean();
+        if (product.owner !== req.user.email) {
+          CustomError.createError({
+            name: "Dele product",
+            code: EErrors.NOT_AUTHORIZED,
+            message: "You are not the owner of this product",
+          });
+        }
       }
+      next();
+    } catch (e) {
+      next(e);
     }
-    next();
   };
 
   deleteOne = async (req, res, next) => {
